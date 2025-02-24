@@ -29,7 +29,7 @@ Ensure there are no errors before proceeding.
 
 2. **Clone the Repository Locally**
 ```bash
-git clone https://github.com/YourOrgName/bondtime-app.git
+git clone https://github.com/BondTime-New/bondtime-app.git
 cd bondtime-app
 ```
 
