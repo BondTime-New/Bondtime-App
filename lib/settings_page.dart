@@ -15,25 +15,27 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Color(0xFFFDFDFD), // Set background color
       appBar: AppBar(
-        backgroundColor: Color(0xFFFDFDFD),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text(
-          'Settings',
-          style: TextStyle(
-            fontFamily: 'InterTight',
-            color: Colors.black,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+  backgroundColor: Color(0xFFFDFDFD),
+  elevation: 0,
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back, color: Colors.black),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  ),
+  title: Align(
+    alignment: Alignment.centerRight, // Right-align the title
+    child: Text(
+      'Settings',
+      style: TextStyle(
+        fontFamily: 'InterTight',
+        color: Colors.black,
+        fontSize: 22,
+        fontWeight: FontWeight.w500,
       ),
+    ),
+  ),
+),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -107,46 +109,60 @@ class _SettingsPageState extends State<SettingsPage> {
                         fontWeight: FontWeight.normal, // Regular font weight
                       ),
                     ),
-                    // Activity Reminders Toggle
-                    SwitchListTile(
-                      title: Text(
-                        'Activity Reminders',
-                        style: TextStyle(
-                          fontFamily: 'InterTight',
-                          fontWeight: FontWeight.w600, // SemiBold
+                    SizedBox(height: 10),
+
+                    // Custom Toggle for Activity Reminders
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Activity Reminders',
+                          style: TextStyle(
+                            fontFamily: 'InterTight',
+                            fontWeight: FontWeight.w600, // SemiBold
+                          ),
                         ),
-                      ),
-                      value: activityReminders,
-                      onChanged: (value) {
-                        setState(() {
-                          activityReminders = value;
-                        });
-                      },
-                      activeColor: Color(0xFF111111), // Toggle button color
-                      activeTrackColor: Color(0xFFC1C1C1), // Background when ON
-                      inactiveThumbColor: Color(0xFF111111), // Toggle color OFF
-                      inactiveTrackColor: Color(0xFFC1C1C1), // Background OFF
+                        Switch(
+                          value: activityReminders,
+                          onChanged: (value) {
+                            setState(() {
+                              activityReminders = value;
+                            });
+                          },
+                          activeColor: Color(0xFF111111), // Button color when ON
+                          activeTrackColor: Color(0xFFC1C1C1), // Track when ON
+                          inactiveThumbColor: Color(0xFF888888), // Greyed out when OFF
+                          inactiveTrackColor: Color(0xFFC1C1C1), // Track when OFF
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                      ],
                     ),
 
-                    // Push Notifications Toggle
-                    SwitchListTile(
-                      title: Text(
-                        'Push Notifications',
-                        style: TextStyle(
-                          fontFamily: 'InterTight',
-                          fontWeight: FontWeight.w600, // SemiBold
+                    // Custom Toggle for Push Notifications
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Push Notifications',
+                          style: TextStyle(
+                            fontFamily: 'InterTight',
+                            fontWeight: FontWeight.w600, // SemiBold
+                          ),
                         ),
-                      ),
-                      value: pushNotifications,
-                      onChanged: (value) {
-                        setState(() {
-                          pushNotifications = value;
-                        });
-                      },
-                      activeColor: Color(0xFF111111), // Toggle button color
-                      activeTrackColor: Color(0xFFC1C1C1), // Background when ON
-                      inactiveThumbColor: Color(0xFF111111), // Toggle color OFF
-                      inactiveTrackColor: Color(0xFFC1C1C1), // Background OFF
+                        Switch(
+                          value: pushNotifications,
+                          onChanged: (value) {
+                            setState(() {
+                              pushNotifications = value;
+                            });
+                          },
+                          activeColor: Color(0xFF111111), // Button color when ON
+                          activeTrackColor: Color(0xFFC1C1C1), // Track when ON
+                          inactiveThumbColor: Color(0xFF888888), // Greyed out when OFF
+                          inactiveTrackColor: Color(0xFFC1C1C1), // Track when OFF
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                      ],
                     ),
                   ],
                 ),
