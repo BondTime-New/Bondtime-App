@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # bondtime_app
+=======
+# bondtime_settings
+>>>>>>> Sasvin
 
 A new Flutter project.
 
