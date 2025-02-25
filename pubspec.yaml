@@ -1,4 +1,4 @@
-name: bondtime_app
+name: bondtime_settings
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -51,12 +51,18 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+flutter:
   uses-material-design: true
+  assets:
+    - assets/fonts/
+
+  fonts:
+    - family: InterTight
+      fonts:
+        - asset: assets/fonts/InterTight-VariableFont_wght.ttf
+        - asset: assets/fonts/InterTight-Italic-VariableFont_wght.ttf
+          style: italic
 
   # To add assets to your application, add an assets section, like this:
   # assets:
