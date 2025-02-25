@@ -196,22 +196,31 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(height: 30),
 
             // Logout Button
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {},
-                child: Text(
-                  'Log out',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-            ),
+            // Logout Button
+Center(
+  child: Padding(
+    padding: const EdgeInsets.only(top: 75), // Top padding of 75 px
+    child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF111111), // Button color #111111
+        fixedSize: Size(380, 65), // Width: 380 px, Height: 65 px
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Corner Radius: 15 px
+        ),
+      ),
+      onPressed: () {},
+      child: Text(
+        'Log out',
+        style: TextStyle(
+          fontFamily: 'InterTight',
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+    ),
+  ),
+),
           ],
         ),
       ),
