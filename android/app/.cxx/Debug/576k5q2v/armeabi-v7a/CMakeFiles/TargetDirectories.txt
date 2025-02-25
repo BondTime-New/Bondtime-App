@@ -1,0 +1,2 @@
+/Users/zijja/Documents/BondTime Development/Bondtime-App-Clone/android/app/.cxx/Debug/576k5q2v/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/zijja/Documents/BondTime Development/Bondtime-App-Clone/android/app/.cxx/Debug/576k5q2v/armeabi-v7a/CMakeFiles/rebuild_cache.dir
