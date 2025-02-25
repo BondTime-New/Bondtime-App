@@ -106,6 +106,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       'Account Settings',
                       style: TextStyle(
                         fontFamily: 'InterTight',
+                        fontSize: 11.23,
                         fontWeight: FontWeight.normal, // Regular font weight
                       ),
                     ),
@@ -119,6 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           'Activity Reminders',
                           style: TextStyle(
                             fontFamily: 'InterTight',
+                            fontSize: 18,
                             fontWeight: FontWeight.w600, // SemiBold
                           ),
                         ),
@@ -146,6 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           'Push Notifications',
                           style: TextStyle(
                             fontFamily: 'InterTight',
+                            fontSize: 18,
                             fontWeight: FontWeight.w600, // SemiBold
                           ),
                         ),
