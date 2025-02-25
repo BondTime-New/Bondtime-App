@@ -15,27 +15,27 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Color(0xFFFDFDFD), // Set background color
       appBar: AppBar(
-  backgroundColor: Color(0xFFFDFDFD),
-  elevation: 0,
-  leading: IconButton(
-    icon: Icon(Icons.arrow_back, color: Colors.black),
-    onPressed: () {
-      Navigator.pop(context);
-    },
-  ),
-  title: Align(
-    alignment: Alignment.centerRight, // Right-align the title
-    child: Text(
-      'Settings',
-      style: TextStyle(
-        fontFamily: 'InterTight',
-        color: Colors.black,
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
+        backgroundColor: Color(0xFFFDFDFD),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Align(
+          alignment: Alignment.centerLeft, // Left-align the title
+          child: Text(
+            'Settings',
+            style: TextStyle(
+              fontFamily: 'InterTight',
+              color: Colors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.w500, // Medium font weight
+            ),
+          ),
+        ),
       ),
-    ),
-  ),
-),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -106,7 +106,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       'Account Settings',
                       style: TextStyle(
                         fontFamily: 'InterTight',
-                        fontSize: 11.23,
+                        fontSize: 18,
                         fontWeight: FontWeight.normal, // Regular font weight
                       ),
                     ),
@@ -171,25 +171,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
 
-            // Other Settings
-            ListTile(
-              leading: Icon(Icons.workspace_premium, color: Colors.black),
-              title: Text('Manage Subscription'),
-              trailing: Icon(Icons.arrow_forward_ios),
+            // Custom List Tiles
+            customListTile(
+              icon: Icons.workspace_premium,
+              title: 'Manage Subscription',
               onTap: () {},
             ),
-            ListTile(
-              leading: Icon(Icons.security, color: Colors.black),
-              title: Text('Security'),
-              trailing: Icon(Icons.arrow_forward_ios),
+            SizedBox(height: 25), // Padding between buttons
+
+            customListTile(
+              icon: Icons.security,
+              title: 'Security',
               onTap: () {},
             ),
-            ListTile(
-              leading: Icon(Icons.message, color: Colors.black),
-              title: Text('Contact us'),
-              trailing: Icon(Icons.arrow_forward_ios),
+            SizedBox(height: 25), // Padding between buttons
+
+            customListTile(
+              icon: Icons.message,
+              title: 'Contact us',
               onTap: () {},
             ),
             SizedBox(height: 30),
@@ -213,6 +214,33 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Custom ListTile Style
+  Widget customListTile({required IconData icon, required String title, required VoidCallback onTap}) {
+    return Container(
+      width: 380,
+      height: 65,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Color(0xFF111111), width: 1), // Stroke color
+      ),
+      child: ListTile(
+        leading: Icon(icon, color: Colors.black),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontFamily: 'InterTight',
+            fontSize: 16, // Text size 16 px
+            fontWeight: FontWeight.normal,
+            color: Colors.black,
+          ),
+        ),
+        trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
+        onTap: onTap,
       ),
     );
   }
