@@ -100,28 +100,58 @@ Container(
             fontWeight: FontWeight.bold,
           ),
         ),
+        // Account Settings Toggles
+StatefulBuilder(
+  builder: (context, setState) {
+    bool activityReminders = true;
+    bool pushNotifications = false;
+    return Column(
+      children: [
+        // Activity Reminders Toggle
         SwitchListTile(
           title: Text(
             'Activity Reminders',
             style: TextStyle(
-              fontFamily: 'InterTight', // Use Inter Tight
+              fontFamily: 'InterTight',
               fontWeight: FontWeight.bold,
             ),
           ),
-          value: true,
-          onChanged: (value) {},
+          value: activityReminders,
+          onChanged: (value) {
+            setState(() {
+              activityReminders = value;
+            });
+          },
+          activeColor: Color(0xFF111111), // Toggle button color
+          activeTrackColor: Color(0xFFC1C1C1), // Background color when ON
+          inactiveThumbColor: Color(0xFF111111), // Toggle button color
+          inactiveTrackColor: Color(0xFFC1C1C1), // Background color when OFF
         ),
+
+        // Push Notifications Toggle
         SwitchListTile(
           title: Text(
             'Push Notifications',
             style: TextStyle(
-              fontFamily: 'InterTight', // Use Inter Tight
+              fontFamily: 'InterTight',
               fontWeight: FontWeight.bold,
             ),
           ),
-          value: false,
-          onChanged: (value) {},
+          value: pushNotifications,
+          onChanged: (value) {
+            setState(() {
+              pushNotifications = value;
+            });
+          },
+          activeColor: Color(0xFF111111), // Toggle button color
+          activeTrackColor: Color(0xFFC1C1C1), // Background color when ON
+          inactiveThumbColor: Color(0xFF111111), // Toggle button color
+          inactiveTrackColor: Color(0xFFC1C1C1), // Background color when OFF
         ),
+      ],
+    );
+  },
+),
       ],
     ),
   ),
