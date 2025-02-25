@@ -177,79 +177,109 @@ class _SettingsPageState extends State<SettingsPage> {
             customListTile(
               icon: Icons.workspace_premium,
               title: 'Manage Subscription',
-              onTap: () {},
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Manage Subscription clicked')),
+                );
+              },
             ),
             SizedBox(height: 25), // Padding between buttons
 
             customListTile(
               icon: Icons.security,
               title: 'Security',
-              onTap: () {},
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Security clicked')),
+                );
+              },
             ),
             SizedBox(height: 25), // Padding between buttons
 
             customListTile(
               icon: Icons.message,
               title: 'Contact us',
-              onTap: () {},
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Contact Us clicked')),
+                );
+              },
             ),
             SizedBox(height: 30),
 
             // Logout Button
-            // Logout Button
-Center(
-  child: Padding(
-    padding: const EdgeInsets.only(top: 75), // Top padding of 75 px
-    child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF111111), // Button color #111111
-        fixedSize: Size(380, 65), // Width: 380 px, Height: 65 px
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15), // Corner Radius: 15 px
-        ),
-      ),
-      onPressed: () {},
-      child: Text(
-        'Log out',
-        style: TextStyle(
-          fontFamily: 'InterTight',
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-    ),
-  ),
-),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50), // Top padding of 75 px
+                child: GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Logged out')),
+                    );
+                  },
+                  child: Container(
+                    width: 380,
+                    height: 65,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF111111), // Button color #111111
+                      borderRadius: BorderRadius.circular(15), // Corner Radius: 15 px
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Log out',
+                      style: TextStyle(
+                        fontFamily: 'InterTight',
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  // Custom ListTile Style
+  // Custom ListTile Style with InkWell for Interactivity
   Widget customListTile({required IconData icon, required String title, required VoidCallback onTap}) {
-    return Container(
-      width: 380,
-      height: 65,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Color(0xFF111111), width: 1), // Stroke color
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: Colors.black),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontFamily: 'InterTight',
-            fontSize: 16, // Text size 16 px
-            fontWeight: FontWeight.normal,
-            color: Colors.black,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        width: 380,
+        height: 65,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Color(0xFF111111), width: 1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, color: Colors.black),
+                  SizedBox(width: 15),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: 'InterTight',
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              Icon(Icons.arrow_forward_ios, color: Colors.black),
+            ],
           ),
         ),
-        trailing: Icon(Icons.arrow_forward_ios, color: Colors.black),
-        onTap: onTap,
       ),
     );
   }
