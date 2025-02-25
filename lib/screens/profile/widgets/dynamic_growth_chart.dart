@@ -2,28 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class DynamicGrowthChart extends StatefulWidget {
-  const DynamicGrowthChart({Key? key}) : super(key: key);
+  final List<double> weightData; // Accepts weight data
+
+  const DynamicGrowthChart({
+    Key? key,
+    required this.weightData,
+  }) : super(key: key);
 
   @override
   _DynamicGrowthChartState createState() => _DynamicGrowthChartState();
 }
 
 class _DynamicGrowthChartState extends State<DynamicGrowthChart> {
-  final List<FlSpot> dataPoints = [
-    const FlSpot(0, 10),
-    const FlSpot(1, 15),
-    const FlSpot(2, 20),
-    const FlSpot(3, 25),
-    const FlSpot(4, 30),
-    const FlSpot(5, 35),
-    const FlSpot(6, 40),
-    const FlSpot(7, 50),
-    const FlSpot(8, 60),
-    const FlSpot(9, 70),
-    const FlSpot(10, 65),
-    const FlSpot(11, 68),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,8 +48,8 @@ class _DynamicGrowthChartState extends State<DynamicGrowthChart> {
               leftTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
-                  reservedSize: 30,
-                  interval: 10,
+                  reservedSize: 40,
+                  interval: 20,
                   getTitlesWidget: (value, meta) {
                     return Text(
                       value.toInt().toString(),
@@ -95,7 +85,11 @@ class _DynamicGrowthChartState extends State<DynamicGrowthChart> {
             maxY: 80,
             lineBarsData: [
               LineChartBarData(
-                spots: dataPoints,
+                spots: widget.weightData
+                    .asMap()
+                    .entries
+                    .map((e) => FlSpot(e.key.toDouble(), e.value))
+                    .toList(),
                 isCurved: true,
                 color: Colors.blue,
                 barWidth: 3,

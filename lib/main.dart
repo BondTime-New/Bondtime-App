@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
-import 'screens/profile/profile_screen.dart';
+import 'package:bondtime_app/screens/profile/profile_screen.dart';
 
 void main() {
-  runApp(const BondTimeApp());
+  runApp(const MyApp());
 }
 
-class BondTimeApp extends StatelessWidget {
-  const BondTimeApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BondTime',
+      debugShowCheckedModeBanner: false,
+      title: 'BondTime App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color(0xFFF5F8FF),
+        fontFamily: 'InterTight', // Applying InterTight globally
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            fontFamily: 'InterTight',
+          ),
+          bodyLarge: TextStyle(
+            fontFamily: 'InterTight',
+          ),
+          bodySmall: TextStyle(
+            fontFamily: 'InterTight',
+          ),
+          headlineMedium: TextStyle(
+            fontFamily: 'InterTight',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       home: const ProfileScreen(),
     );

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'widgets/profile_header.dart';
-import 'widgets/skill_card.dart';
-import 'widgets/dynamic_growth_chart.dart';
+import 'package:bondtime_app/screens/profile/widgets/profile_header.dart';
+import 'package:bondtime_app/screens/profile/widgets/skill_card.dart';
+import 'package:bondtime_app/screens/profile/widgets/dynamic_growth_chart.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  // Dynamic Weight Data
+  List<double> weightData = [10, 15, 20, 25, 30, 35, 40, 50, 60, 70, 65, 68];
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +22,11 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Profile Header
               const ProfileHeader(),
               const SizedBox(height: 10),
 
-              // Weight and Height Cards
+              // Weight and Height Cards with Strokes
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
@@ -29,13 +38,10 @@ class ProfileScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10,
-                              spreadRadius: 2,
-                            ),
-                          ],
+                          border: Border.all(
+                            color: Colors.grey.shade400, // Stroke Color
+                            width: 1.5, // Stroke Width
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,6 +51,7 @@ class ProfileScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
+                                color: Colors.black54,
                               ),
                             ),
                             SizedBox(height: 6),
@@ -67,13 +74,10 @@ class ProfileScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 10,
-                              spreadRadius: 2,
-                            ),
-                          ],
+                          border: Border.all(
+                            color: Colors.grey.shade400, // Stroke Color
+                            width: 1.5, // Stroke Width
+                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,6 +87,7 @@ class ProfileScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
+                                color: Colors.black54,
                               ),
                             ),
                             SizedBox(height: 6),
@@ -101,48 +106,59 @@ class ProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 20),
 
-              // Skill Cards Grid
+              // Skill Cards with Strokes
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1.3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: const [
-                    SkillCard(
-                      title: "Fine Motor Skills",
-                      value: "3.5",
-                      color: Colors.greenAccent,
+                child: Column(
+                  children: [
+                    Row(
+                      children: const [
+                        Expanded(
+                          child: SkillCard(
+                            skillName: "Fine Motor Skills",
+                            score: 3.5,
+                            backgroundColor: Color(0xFFE0F7FA),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: SkillCard(
+                            skillName: "Gross Motor Skills",
+                            score: 3.5,
+                            backgroundColor: Color(0xFFE8EAF6),
+                          ),
+                        ),
+                      ],
                     ),
-                    SkillCard(
-                      title: "Gross Motor Skills",
-                      value: "3.5",
-                      color: Colors.blueAccent,
-                    ),
-                    SkillCard(
-                      title: "Sensory Development",
-                      value: "3.5",
-                      color: Colors.pinkAccent,
-                    ),
-                    SkillCard(
-                      title: "Communication Skills",
-                      value: "3.5",
-                      color: Colors.yellowAccent,
+                    const SizedBox(height: 10),
+                    Row(
+                      children: const [
+                        Expanded(
+                          child: SkillCard(
+                            skillName: "Sensory Development",
+                            score: 3.5,
+                            backgroundColor: Color(0xFFFFEBEE),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: SkillCard(
+                            skillName: "Communication Skills",
+                            score: 3.5,
+                            backgroundColor: Color(0xFFFFF3E0),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-
               const SizedBox(height: 20),
 
-              // Dynamic Growth Chart
-              const DynamicGrowthChart(),
+              // Dynamic Growth Chart with Weight Data
+              DynamicGrowthChart(weightData: weightData),
             ],
           ),
         ),

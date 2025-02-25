@@ -11,35 +11,10 @@ class ProfileHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Profile Picture with Edit Icon
-          Stack(
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundImage:
-                    const AssetImage('assets/images/default_avatar.png'),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    // Navigate to Edit Profile Screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen()),
-                    );
-                  },
-                  child: CircleAvatar(
-                    radius: 18,
-                    backgroundColor: Colors.blueAccent,
-                    child:
-                        const Icon(Icons.edit, color: Colors.white, size: 18),
-                  ),
-                ),
-              ),
-            ],
+          // Profile Picture
+          const CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage('assets/images/default_avatar.svg'),
           ),
           const SizedBox(width: 20),
 
@@ -67,42 +42,31 @@ class ProfileHeader extends StatelessWidget {
             ),
           ),
 
-          // Notification and Settings Icons
-          Row(
-            children: [
-              Stack(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.notifications,
-                        color: Colors.redAccent),
-                    onPressed: () {
-                      // Notification action
-                    },
-                  ),
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Text(
-                        '3',
-                        style: TextStyle(color: Colors.white, fontSize: 10),
-                      ),
-                    ),
-                  ),
-                ],
+          // Edit Button
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditProfileScreen(),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueAccent, // Button background color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              IconButton(
-                icon: const Icon(Icons.settings, color: Colors.black),
-                onPressed: () {
-                  // Settings action
-                },
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ),
+            child: const Text(
+              "Edit",
+              style: TextStyle(
+                color: Colors.white, // Change this to your desired text color
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
-            ],
+            ),
           ),
         ],
       ),

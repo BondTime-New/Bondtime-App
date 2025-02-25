@@ -1,0 +1,2 @@
+/Users/thisaraneelawala/Documents/UNI/GITHUB/Bondtime-App/android/app/.cxx/Debug/461z3v50/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/thisaraneelawala/Documents/UNI/GITHUB/Bondtime-App/android/app/.cxx/Debug/461z3v50/armeabi-v7a/CMakeFiles/rebuild_cache.dir
