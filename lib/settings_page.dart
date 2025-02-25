@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  // Toggle States
+  bool activityReminders = true;
+  bool pushNotifications = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFDFDFD), // Set background color here
+      backgroundColor: Color(0xFFFDFDFD), // Set background color
       appBar: AppBar(
-        backgroundColor: Color(0xFFFDFDFD), // Set AppBar background color
+        backgroundColor: Color(0xFFFDFDFD),
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
@@ -17,6 +26,7 @@ class SettingsPage extends StatelessWidget {
         title: Text(
           'Settings',
           style: TextStyle(
+            fontFamily: 'InterTight',
             color: Colors.black,
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -30,146 +40,121 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // General Settings Card
-          
-// General Settings Card
-Container(
-  width: 380, // Set width
-  height: 328, // Set height
-  decoration: BoxDecoration(
-    color: Color(0xFFFEFEFE), // Background color #FEFEFE
-    borderRadius: BorderRadius.circular(15),
-    border: Border.all(color: Colors.black, width: 1),
-  ),
-  child: Padding(
-    padding: const EdgeInsets.all(15.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Header
-        Text(
-          'General Settings',
-          style: TextStyle(
-            fontFamily: 'InterTight', // Use Inter Tight
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 15),
+            Container(
+              width: 380, // Set width
+              height: 328, // Set height
+              decoration: BoxDecoration(
+                color: Color(0xFFFEFEFE), // Background color #FEFEFE
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black, width: 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header
+                    Text(
+                      'General Settings',
+                      style: TextStyle(
+                        fontFamily: 'InterTight',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 15),
 
-        // Profile Section
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 35,
-              backgroundImage: NetworkImage(
-                  'https://via.placeholder.com/150'), // Change with your image URL
-            ),
-            SizedBox(width: 15),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Emily Watson',
-                  style: TextStyle(
-                    fontFamily: 'InterTight', // Use Inter Tight
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                    // Profile Section
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 35,
+                          backgroundImage: NetworkImage(
+                              'https://via.placeholder.com/150'), // Change with your image URL
+                        ),
+                        SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Emily Watson',
+                              style: TextStyle(
+                                fontFamily: 'InterTight',
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Edit Your Profile',
+                              style: TextStyle(
+                                fontFamily: 'InterTight',
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(Icons.edit, color: Colors.black),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+
+                    // Account Settings
+                    Text(
+                      'Account Settings',
+                      style: TextStyle(
+                        fontFamily: 'InterTight',
+                        fontWeight: FontWeight.normal, // Regular font weight
+                      ),
+                    ),
+                    // Activity Reminders Toggle
+                    SwitchListTile(
+                      title: Text(
+                        'Activity Reminders',
+                        style: TextStyle(
+                          fontFamily: 'InterTight',
+                          fontWeight: FontWeight.w600, // SemiBold
+                        ),
+                      ),
+                      value: activityReminders,
+                      onChanged: (value) {
+                        setState(() {
+                          activityReminders = value;
+                        });
+                      },
+                      activeColor: Color(0xFF111111), // Toggle button color
+                      activeTrackColor: Color(0xFFC1C1C1), // Background when ON
+                      inactiveThumbColor: Color(0xFF111111), // Toggle color OFF
+                      inactiveTrackColor: Color(0xFFC1C1C1), // Background OFF
+                    ),
+
+                    // Push Notifications Toggle
+                    SwitchListTile(
+                      title: Text(
+                        'Push Notifications',
+                        style: TextStyle(
+                          fontFamily: 'InterTight',
+                          fontWeight: FontWeight.w600, // SemiBold
+                        ),
+                      ),
+                      value: pushNotifications,
+                      onChanged: (value) {
+                        setState(() {
+                          pushNotifications = value;
+                        });
+                      },
+                      activeColor: Color(0xFF111111), // Toggle button color
+                      activeTrackColor: Color(0xFFC1C1C1), // Background when ON
+                      inactiveThumbColor: Color(0xFF111111), // Toggle color OFF
+                      inactiveTrackColor: Color(0xFFC1C1C1), // Background OFF
+                    ),
+                  ],
                 ),
-                Text(
-                  'Edit Your Profile',
-                  style: TextStyle(
-                    fontFamily: 'InterTight', // Use Inter Tight
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            Spacer(),
-            Icon(Icons.edit, color: Colors.black),
-          ],
-        ),
-        SizedBox(height: 20),
-
-        // Account Settings
-        Text(
-          'Account Settings',
-          style: TextStyle(
-            fontFamily: 'InterTight', // Use Inter Tight
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        // Account Settings Toggles
-StatefulBuilder(
-  builder: (context, setState) {
-    bool activityReminders = true;
-    bool pushNotifications = false;
-    return Column(
-      children: [
-        // Activity Reminders Toggle
-        SwitchListTile(
-          title: Text(
-            'Activity Reminders',
-            style: TextStyle(
-              fontFamily: 'InterTight',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          value: activityReminders,
-          onChanged: (value) {
-            setState(() {
-              activityReminders = value;
-            });
-          },
-          activeColor: Color(0xFF111111), // Toggle button color
-          activeTrackColor: Color(0xFFC1C1C1), // Background color when ON
-          inactiveThumbColor: Color(0xFF111111), // Toggle button color
-          inactiveTrackColor: Color(0xFFC1C1C1), // Background color when OFF
-        ),
-
-        // Push Notifications Toggle
-        SwitchListTile(
-          title: Text(
-            'Push Notifications',
-            style: TextStyle(
-              fontFamily: 'InterTight',
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          value: pushNotifications,
-          onChanged: (value) {
-            setState(() {
-              pushNotifications = value;
-            });
-          },
-          activeColor: Color(0xFF111111), // Toggle button color
-          activeTrackColor: Color(0xFFC1C1C1), // Background color when ON
-          inactiveThumbColor: Color(0xFF111111), // Toggle button color
-          inactiveTrackColor: Color(0xFFC1C1C1), // Background color when OFF
-        ),
-      ],
-    );
-  },
-),
-      ],
-    ),
-  ),
-),
-            SizedBox(height: 20),
-
-            // Account Settings
-            Text(
-              'Account Settings',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
               ),
             ),
-            
             SizedBox(height: 20),
 
-            // Subscription, Security, Contact us
+            // Other Settings
             ListTile(
               leading: Icon(Icons.workspace_premium, color: Colors.black),
               title: Text('Manage Subscription'),
