@@ -70,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     Row(
                       children: [
                         CircleAvatar(
-                          radius: 35,
+                          radius: 49,
                           backgroundImage: NetworkImage(
                               'https://via.placeholder.com/150'), // Change with your image URL
                         ),
