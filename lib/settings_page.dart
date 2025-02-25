@@ -30,7 +30,8 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // General Settings Card
-            // General Settings Card
+          
+// General Settings Card
 Container(
   width: 380, // Set width
   height: 328, // Set height
@@ -44,14 +45,18 @@ Container(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Header
         Text(
           'General Settings',
           style: TextStyle(
+            fontFamily: 'InterTight', // Use Inter Tight
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         SizedBox(height: 15),
+
+        // Profile Section
         Row(
           children: [
             CircleAvatar(
@@ -66,6 +71,7 @@ Container(
                 Text(
                   'Emily Watson',
                   style: TextStyle(
+                    fontFamily: 'InterTight', // Use Inter Tight
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -73,6 +79,7 @@ Container(
                 Text(
                   'Edit Your Profile',
                   style: TextStyle(
+                    fontFamily: 'InterTight', // Use Inter Tight
                     color: Colors.grey,
                   ),
                 ),
@@ -81,6 +88,39 @@ Container(
             Spacer(),
             Icon(Icons.edit, color: Colors.black),
           ],
+        ),
+        SizedBox(height: 20),
+
+        // Account Settings
+        Text(
+          'Account Settings',
+          style: TextStyle(
+            fontFamily: 'InterTight', // Use Inter Tight
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SwitchListTile(
+          title: Text(
+            'Activity Reminders',
+            style: TextStyle(
+              fontFamily: 'InterTight', // Use Inter Tight
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          value: true,
+          onChanged: (value) {},
+        ),
+        SwitchListTile(
+          title: Text(
+            'Push Notifications',
+            style: TextStyle(
+              fontFamily: 'InterTight', // Use Inter Tight
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          value: false,
+          onChanged: (value) {},
         ),
       ],
     ),
@@ -96,22 +136,7 @@ Container(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SwitchListTile(
-              title: Text(
-                'Activity Reminders',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              value: true,
-              onChanged: (value) {},
-            ),
-            SwitchListTile(
-              title: Text(
-                'Push Notifications',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              value: false,
-              onChanged: (value) {},
-            ),
+            
             SizedBox(height: 20),
 
             // Subscription, Security, Contact us
