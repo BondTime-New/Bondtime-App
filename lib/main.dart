@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'onboarding_screen.dart';
+import 'sign_up_screen.dart'; // ✅ Correct Import
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'InterTight',
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const OnboardingScreen(),
+      home: const SignUpScreen(), // Ensure SignUpScreen exists
     );
   }
 }

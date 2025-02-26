@@ -1,16 +1,16 @@
-name: baby_app
+name: sign_up
 description: "A new Flutter project."
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ^3.5.1
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^2.0.9  # Required for SVG images
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
@@ -20,12 +20,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # Add assets (Images & SVGs)
   assets:
-    - assets/images/21864181_6502439 1.svg  # Ensure file name is correct
-    - assets/fonts/  # Font directory
+    - assets/fonts/
 
-  # Add custom fonts
   fonts:
     - family: InterTight
       fonts:
