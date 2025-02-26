@@ -1,4 +1,4 @@
-package com.example.baby_registration_app
+package com.example.baby_app
 
 import io.flutter.embedding.android.FlutterActivity
 

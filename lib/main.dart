@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'baby_registration_screen.dart';
+import 'onboarding_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'InterTight',
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const BabyRegistrationScreen(),
+      home: const OnboardingScreen(),
     );
   }
 }

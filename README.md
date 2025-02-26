@@ -1,4 +1,4 @@
-# baby_registration_app
+# baby_app
 
 A new Flutter project.
 
