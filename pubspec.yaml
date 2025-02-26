@@ -1,34 +1,32 @@
-name: rewards_screen
-description: A new Flutter project with Inter Tight font.
+name: bondtime_activity
+description: A new Flutter project for BondTime's Activity Screen.
 
-publish_to: 'none'
+publish_to: 'none' 
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.1
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
-  flutter_svg: ^2.0.7   # <-- Move it here under dependencies
+  flutter_svg: ^2.0.7
+
+  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/fonts/
-    - assets/icons/
+    - assets/icons/engagement.svg
 
   fonts:
     - family: InterTight
       fonts:
         - asset: assets/fonts/InterTight-VariableFont_wght.ttf
         - asset: assets/fonts/InterTight-Italic-VariableFont_wght.ttf
-          style: italic

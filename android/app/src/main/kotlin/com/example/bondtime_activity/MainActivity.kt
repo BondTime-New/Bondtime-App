@@ -1,4 +1,4 @@
-package com.example.rewards_screen
+package com.example.bondtime_activity
 
 import io.flutter.embedding.android.FlutterActivity
 

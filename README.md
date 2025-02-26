@@ -1,4 +1,4 @@
-# rewards_screen
+# bondtime_activity
 
 A new Flutter project.
 
