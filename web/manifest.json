@@ -1,6 +1,6 @@
 {
-    "name": "bondtime_app",
-    "short_name": "bondtime_app",
+    "name": "baby_registration_app",
+    "short_name": "baby_registration_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
