@@ -1,22 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'screens/ai_welcome_screen.dart';
+import 'package:bondtime_app/screens/profile/profile_screen.dart';
 
 void main() {
-  runApp(BondTimeApp());
+  runApp(const MyApp());
 }
 
-class BondTimeApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BondTime AI Companion',
+      debugShowCheckedModeBanner: false,
+      title: 'BondTime App',
       theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        primaryColor: Color(0xFF5A87FE),
-        scaffoldBackgroundColor: Color(0xFFF8F9FA),
+        primarySwatch: Colors.blue,
+        fontFamily: 'InterTight', // Applying InterTight globally
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            fontFamily: 'InterTight',
+          ),
+          bodyLarge: TextStyle(
+            fontFamily: 'InterTight',
+          ),
+          bodySmall: TextStyle(
+            fontFamily: 'InterTight',
+          ),
+          headlineMedium: TextStyle(
+            fontFamily: 'InterTight',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
-      home: AIWelcomeScreen(),
+      home: const ProfileScreen(),
     );
   }
 }

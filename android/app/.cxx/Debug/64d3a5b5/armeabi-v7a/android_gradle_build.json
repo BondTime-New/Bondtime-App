@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/Users/thisaraneelawala/Documents/BondTime/Bondtime /bondtime/bond_time/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/thisaraneelawala/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/thisaraneelawala/Documents/BondTime/Appnew/bondtime_app/android/app/.cxx/Debug/64d3a5b5/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/thisaraneelawala/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/thisaraneelawala/Documents/BondTime/Appnew/bondtime_app/android/app/.cxx/Debug/64d3a5b5/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/thisaraneelawala/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/thisaraneelawala/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}
