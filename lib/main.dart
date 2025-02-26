@@ -1,11 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:bondtime_app/screens/profile/profile_screen.dart';
-=======
 import 'settings_page.dart';
->>>>>>> Sasvin
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +9,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-<<<<<<< HEAD
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -84,14 +79,3 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     );
   }
 }
-=======
-      title: 'BondTime',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'InterTight',  // Apply Inter Tight globally
-      ),
-      home: SettingsPage(),
-    );
-  }
-}
->>>>>>> Sasvin
