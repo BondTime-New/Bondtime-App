@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 <<<<<<< HEAD
 import 'package:bondtime_app/screens/profile/profile_screen.dart';
@@ -5,43 +7,80 @@ import 'package:bondtime_app/screens/profile/profile_screen.dart';
 import 'settings_page.dart';
 >>>>>>> Sasvin
 
-void main() {
-  runApp(BondTimeApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
 }
 
 <<<<<<< HEAD
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-=======
-class BondTimeApp extends StatelessWidget {
->>>>>>> Sasvin
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-      title: 'BondTime App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'InterTight', // Applying InterTight globally
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(
-            fontFamily: 'InterTight',
-          ),
-          bodyLarge: TextStyle(
-            fontFamily: 'InterTight',
-          ),
-          bodySmall: TextStyle(
-            fontFamily: 'InterTight',
-          ),
-          headlineMedium: TextStyle(
-            fontFamily: 'InterTight',
-            fontWeight: FontWeight.bold,
-          ),
+      title: 'BondTime',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const UserProfileScreen(),
+    );
+  }
+}
+
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({super.key});
+
+  @override
+  _UserProfileScreenState createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+
+  Future<void> addUserProfile() async {
+    try {
+      await FirebaseFirestore.instance.collection('users').add({
+        'name': nameController.text,
+        'email': emailController.text,
+        'childAge': int.parse(ageController.text),
+      });
+      print("User profile added successfully!");
+    } catch (e) {
+      print("Error adding user profile: $e");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("User Profile")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(labelText: "Name"),
+            ),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: "Email"),
+            ),
+            TextField(
+              controller: ageController,
+              decoration: const InputDecoration(labelText: "Child's Age"),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: addUserProfile,
+              child: const Text("Add User Profile"),
+            ),
+          ],
         ),
       ),
-      home: const ProfileScreen(),
     );
   }
 }
