@@ -1,110 +1,79 @@
 import 'package:flutter/material.dart';
+import '../styles/app_styles.dart'; // Ensure this file exists
 
 class ThankYouScreen extends StatelessWidget {
-  const ThankYouScreen({Key? key}) : super(key: key);
+  const ThankYouScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("BondTime"),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          width: 368, // Set width
-          height: 484, // Set height
-          padding: const EdgeInsets.all(20),
+          width: 368,
+          height: 484,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(18.65), // Updated corner radius
+            borderRadius: BorderRadius.circular(18.65),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
                 spreadRadius: 2,
+                offset: const Offset(0, 5),
               ),
             ],
           ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 "Thank You for Your Feedback!",
+                style: AppStyles.headline, // Fixed reference
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
               const SizedBox(height: 15),
               const Icon(
                 Icons.favorite,
-                color: Colors.redAccent,
+                color: Colors.red,
                 size: 40,
               ),
-              const SizedBox(height: 10),
-              const Text(
-                "Your insights help us tailor activities that better suit your child's needs. We're grateful for your support in their growth journey!",
+              const SizedBox(height: 15),
+              Text(
+                "Your insights help us tailor activities that better suit your child’s needs. We’re grateful for your support in their growth journey!",
+                style: AppStyles.bodyText, // Fixed reference
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
               ),
               const SizedBox(height: 30),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  onPressed: () {
-                    // TODO: Implement "Next Activity" navigation
-                  },
-                  child: const Text(
-                    "Next Activity",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/next_activity');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                child: Text("Next Activity", style: AppStyles.buttonText),
               ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(
-                        color: Colors.black, width: 2), // Outline only
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  onPressed: () {
-                    Navigator.popUntil(context, (route) => route.isFirst);
-                  },
-                  child: const Text(
-                    "Close",
-                    style: TextStyle(
-                      color: Colors.black, // Black text for outlined button
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+              const SizedBox(height: 15),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.black, width: 2),
+                  foregroundColor: Colors.black,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                child: Text("Close", style: AppStyles.buttonText),
               ),
             ],
           ),
