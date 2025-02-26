@@ -1,4 +1,4 @@
-# bondtime_app
+# bondy_ai_companion
 
 A new Flutter project.
 
