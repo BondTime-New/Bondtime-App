@@ -1,4 +1,4 @@
-# bondtime_settings
+# rewards_screen
 
 A new Flutter project.
 

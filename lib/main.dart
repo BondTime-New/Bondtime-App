@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'settings_page.dart';
+import 'screens/rewards_screen.dart';
 
 void main() {
-  runApp(BondTimeApp());
+  runApp(RewardsApp());
 }
 
-class BondTimeApp extends StatelessWidget {
+class RewardsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BondTime',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'InterTight',  // Apply Inter Tight globally
+        fontFamily: 'InterTight',  // Applying Inter Tight globally
       ),
-      home: SettingsPage(),
+      home: RewardsScreen(),
     );
   }
 }

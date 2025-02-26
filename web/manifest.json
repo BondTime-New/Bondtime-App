@@ -1,6 +1,6 @@
 {
-    "name": "bondtime_settings",
-    "short_name": "bondtime_settings",
+    "name": "rewards_screen",
+    "short_name": "rewards_screen",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
