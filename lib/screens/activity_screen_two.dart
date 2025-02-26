@@ -20,6 +20,7 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
   double maxWidth = 344;
   String timerText = '4:59';
   bool isPaused = false;
+  bool isDone = false; // New flag to track if the timer is done
 
   @override
   void initState() {
@@ -41,14 +42,15 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
         if (seconds > 0) {
           seconds--;
         } else {
-            if (minutes > 0) {
-                minutes--;
-                seconds = 59;
-            } else {
-                timer.cancel();
-                timerText = "Done";
-                progressWidth = maxWidth;
-            }
+          if (minutes > 0) {
+            minutes--;
+            seconds = 59;
+          } else {
+            timer.cancel();
+            timerText = "Done";
+            isDone = true; // Set the flag to true when done
+            progressWidth = maxWidth;
+          }
         }
 
         if (timerText != "Done") {
@@ -62,16 +64,19 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
   }
 
   void togglePauseResume() {
-    setState(() {
-      if (isPaused) {
-        startTimer();
-        isPaused = false;
-      } else {
-        timer?.cancel();
-        isPaused = true;
-        timerText = "Paused";
-      }
-    });
+    // Only allow pause/resume if the timer is not done
+    if (!isDone) {
+      setState(() {
+        if (isPaused) {
+          startTimer();
+          isPaused = false;
+        } else {
+          timer?.cancel();
+          isPaused = true;
+          timerText = "Paused";
+        }
+      });
+    }
   }
 
   String getFormattedTime() {
@@ -173,7 +178,7 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
 
             // Timer Button with Animated Progress Bar
             GestureDetector(
-              onTap: togglePauseResume,
+              onTap: togglePauseResume, // Toggle pause and resume on tap
               child: Container(
                 width: maxWidth,
                 height: 58,
@@ -230,7 +235,6 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Left Indicator
                   Container(
                     width: widget.currentPage == 1 ? 20 : 10,
                     height: 10,
@@ -243,7 +247,6 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
                     ),
                   ),
                   SizedBox(width: 5),
-                  // Right Indicator
                   Container(
                     width: widget.currentPage == 2 ? 20 : 10,
                     height: 10,
