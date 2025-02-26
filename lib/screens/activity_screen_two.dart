@@ -1,18 +1,25 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:bondtime_activity/screens/voice_assistance_screen.dart';
 
 class ActivityScreenTwo extends StatefulWidget {
+  final int currentPage;
+
+  ActivityScreenTwo({this.currentPage = 2}); // Default to page 2
+
   @override
   _ActivityScreenTwoState createState() => _ActivityScreenTwoState();
 }
 
 class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
-  int minutes = 4; // Start from 4:59 (5 minutes countdown)
+  int minutes = 4;
   int seconds = 59;
   Timer? timer;
   double progressWidth = 0.0;
-  double maxWidth = 344; // Width of the timer container
+  double maxWidth = 344;
+  String timerText = '4:59';
+  bool isPaused = false;
 
   @override
   void initState() {
@@ -27,7 +34,6 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
   }
 
   void startTimer() {
-    // Total time in seconds for 5 minutes
     int totalTimeInSeconds = (minutes * 60) + seconds;
 
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -35,19 +41,36 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
         if (seconds > 0) {
           seconds--;
         } else {
-          if (minutes > 0) {
-            minutes--;
-            seconds = 59;
-          } else {
-            timer.cancel();
-          }
+            if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+            } else {
+                timer.cancel();
+                timerText = "Done";
+                progressWidth = maxWidth;
+            }
         }
 
-        // Calculate remaining time in seconds
+        if (timerText != "Done") {
+          timerText = getFormattedTime();
+        }
+
         int remainingTime = (minutes * 60) + seconds;
-        // Calculate progress width based on remaining time
         progressWidth = maxWidth * (1 - (remainingTime / totalTimeInSeconds));
       });
+    });
+  }
+
+  void togglePauseResume() {
+    setState(() {
+      if (isPaused) {
+        startTimer();
+        isPaused = false;
+      } else {
+        timer?.cancel();
+        isPaused = true;
+        timerText = "Paused";
+      }
     });
   }
 
@@ -120,14 +143,20 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
               ),
               textAlign: TextAlign.center,
             ),
-            Spacer(), // Pushes content above and moves buttons to the bottom
+            Spacer(),
 
             // Audio Guidance Button
             Container(
-              width: 344, // Width of the button
-              height: 58, // Height of the button
+              width: 344,
+              height: 58,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VoiceAssistanceScreen()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
@@ -140,117 +169,98 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
                 ),
               ),
             ),
-            SizedBox(height: 15), // Space between buttons
+            SizedBox(height: 15),
 
             // Timer Button with Animated Progress Bar
-            Container(
-              width: maxWidth,
-              height: 58,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 20,
-                    offset: Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Container(
+            GestureDetector(
+              onTap: togglePauseResume,
+              child: Container(
+                width: maxWidth,
+                height: 58,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[600],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: Duration(seconds: 1),
+                      width: progressWidth,
+                      height: 58,
                       decoration: BoxDecoration(
-                        color: Colors.grey[600],
+                        color: Colors.black,
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                  ),
-                  AnimatedContainer(
-                    duration: Duration(seconds: 1),
-                    width: progressWidth,
-                    height: 58,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      getFormattedTime(),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    Center(
+                      child: Text(
+                        timerText,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
-            SizedBox(height: 30), // Adjusted height to move the buttons up
+            SizedBox(height: 30),
 
             // Page Indicator
             Container(
-              margin: EdgeInsets.only(top: 20), // Moves the page indicators down
+              margin: EdgeInsets.only(top: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // Left Indicator
                   Container(
-                    width: 20,
+                    width: widget.currentPage == 1 ? 20 : 10,
                     height: 10,
                     decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(20),
+                      color: widget.currentPage == 1
+                          ? Colors.black
+                          : Colors.grey[400],
+                      borderRadius: BorderRadius.circular(
+                          widget.currentPage == 1 ? 20 : 10),
                     ),
                   ),
                   SizedBox(width: 5),
+                  // Right Indicator
                   Container(
-                    width: 10,
+                    width: widget.currentPage == 2 ? 20 : 10,
                     height: 10,
                     decoration: BoxDecoration(
-                      color: Colors.black,
-                      shape: BoxShape.circle,
+                      color: widget.currentPage == 2
+                          ? Colors.black
+                          : Colors.grey[400],
+                      borderRadius: BorderRadius.circular(
+                          widget.currentPage == 2 ? 20 : 10),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20), // Space below the dots
-            SizedBox(height: 20), // Adds a little padding at the bottom
+            SizedBox(height: 20),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.face),
-            label: 'bondy',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.extension),
-            label: 'activities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.medical_services_outlined),
-            label: 'pediatricians',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'profile',
-          ),
-        ],
       ),
     );
   }
