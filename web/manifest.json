@@ -1,6 +1,6 @@
 {
-    "name": "sign_in",
-    "short_name": "sign_in",
+    "name": "baby_app",
+    "short_name": "baby_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -32,10 +32,9 @@ class _SignInScreenState extends State<SignInScreen> {
   void _validateForm() {
     setState(() {
       _emailError = _validateEmail(_emailController.text);
-      _isFormValid =
-          _emailController.text.isNotEmpty && // Ensure email is filled
-              _emailError == null && // Ensure email is valid
-              _passwordController.text.isNotEmpty; // Ensure password is filled
+      _isFormValid = _emailController.text.isNotEmpty &&
+          _emailError == null &&
+          _passwordController.text.isNotEmpty;
     });
   }
 
@@ -51,17 +50,30 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      /// **AppBar for Back Button (Now Fully Left-Aligned)**
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10), // Adjust left padding
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            splashRadius: 20, // Matches onboarding screen behavior
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(
+            horizontal: 20), // Match onboarding padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {},
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text(
               "Login to your account",
               style: TextStyle(
@@ -89,9 +101,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 "assets/images/pw.svg"),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _isFormValid
-                  ? () {}
-                  : null, // Only clickable when both fields are filled
+              onPressed: _isFormValid ? () {} : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor:
                     _isFormValid ? Colors.black : const Color(0xFFA0A0A0),
@@ -115,8 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   overlayColor: MaterialStateProperty.resolveWith<Color?>(
                     (states) {
                       if (states.contains(MaterialState.pressed)) {
-                        return const Color(
-                            0xFFD1D1D1); // Light grey ripple effect
+                        return const Color(0xFFD1D1D1);
                       }
                       return null;
                     },
@@ -223,15 +232,14 @@ class _SignInScreenState extends State<SignInScreen> {
         color: Colors.white,
       ),
       child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, // Keep all buttons centered
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
             iconPath,
             width: 24,
             height: 24,
           ),
-          const SizedBox(width: 12), // Even spacing between icon & text
+          const SizedBox(width: 12),
           Text(
             text,
             style: const TextStyle(

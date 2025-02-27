@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'sign_in_screen.dart'; // Import the SignInScreen file
+import 'onboarding_screen.dart';
+import 'sign_in_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'InterTight',
       ),
-      home: const SignInScreen(), // Set SignInScreen as the home page
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const OnboardingScreen(),
+        '/sign-in': (context) => const SignInScreen(),
+      },
     );
   }
 }

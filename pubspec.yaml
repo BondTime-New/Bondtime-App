@@ -1,5 +1,5 @@
-name: sign_in
-description: A Flutter app with a custom sign-in UI.
+name: baby_app
+description: "A new Flutter project."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -10,24 +10,27 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
-  flutter_svg: ^2.0.9
+  flutter_svg: ^2.0.9  # Required for SVG images
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
 
+  # Add assets (Images & SVGs)
   assets:
+    - assets/images/21864181_6502439 1.svg  # Ensure file name is correct
+    - assets/fonts/  # Font directory
     - assets/images/email.svg
     - assets/images/pw.svg
     - assets/images/apple.svg
     - assets/images/google.svg
     - assets/images/facebook.svg
 
+  # Add custom fonts
   fonts:
     - family: InterTight
       fonts:
