@@ -31,6 +31,7 @@ flutter:
     - assets/icons/replay.svg
     - assets/icons/next.svg
     - assets/icons/previous.svg
+    - assets/icons/bondtime_logo.svg
 
 
   fonts:

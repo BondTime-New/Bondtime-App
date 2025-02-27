@@ -178,35 +178,31 @@ class _VoiceAssistanceScreenState extends State<VoiceAssistanceScreen> {
                           ],
                         ),
                         SizedBox(width: 40),
-                        // Play Button Moved Up
-                        Transform.translate(
-                          offset: Offset(0, -20), // Move Play button up by 20px
-                          child: Container(
-                            width: 90,
-                            height: 90,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10),
-                                ),
-                              ],
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                hasCompleted
-                                    ? Icons.replay
-                                    : (isPlaying
-                                        ? Icons.pause
-                                        : Icons.play_arrow),
-                                color: Colors.white,
-                                size: 40,
+                        Container(
+                          width: 90,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 20,
+                                offset: Offset(0, 10),
                               ),
-                              onPressed: togglePlayPause,
+                            ],
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              hasCompleted
+                                  ? Icons.replay
+                                  : (isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow),
+                              color: Colors.white,
+                              size: 40,
                             ),
+                            onPressed: togglePlayPause,
                           ),
                         ),
                         SizedBox(width: 40),
@@ -265,6 +261,75 @@ class _VoiceAssistanceScreenState extends State<VoiceAssistanceScreen> {
                 ],
               ),
             ),
+            if (showPopup) ...[
+              Container(
+                color: Colors.black.withOpacity(0.5),
+              ),
+              Center(
+                child: Container(
+                  width: 344,
+                  height: 207,
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Complete Activity',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Text(
+                        'Are you sure you have completed this activity?',
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        children: [
+                          // No, Continue Button
+                          OutlinedButton(
+                            onPressed: togglePopup,
+                            style: OutlinedButton.styleFrom(
+                              fixedSize: Size(134, 48),
+                              side: BorderSide(color: Color(0xFF111111)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              'No, Continue',
+                              style: TextStyle(color: Color(0xFF111111)),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ActivityScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: Size(134, 48),
+                              backgroundColor: Color(0xFF111111),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              'Yes',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
