@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:bondtime_activity/screens/activity_screen_two.dart';
 
-class ActivityScreen extends StatelessWidget {
+class ActivityScreen extends StatefulWidget {
+  @override
+  _ActivityScreenState createState() => _ActivityScreenState();
+}
+
+class _ActivityScreenState extends State<ActivityScreen> {
+  int _selectedIndex = 2; // Default to Activities tab
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,31 +32,31 @@ class ActivityScreen extends StatelessWidget {
         ),
         title: SvgPicture.asset(
           'assets/icons/bondtime_logo.svg', // Path to your SVG logo
-          height: 18, // Set height to 22px
+          height: 18, // Set height to 18px
         ),
         actions: [
-  IconButton(
-    icon: SvgPicture.asset(
-      'assets/icons/notifications.svg',
-      height: 24,
-      width: 24,
-      color: Colors.black,
-    ),
-    onPressed: () {},
-  ),
-  Padding(
-    padding: const EdgeInsets.only(right: 10.0), // Adjust this value to push more
-    child: IconButton(
-      icon: SvgPicture.asset(
-        'assets/icons/settings.svg',
-        height: 24,
-        width: 24,
-        color: Colors.black,
-      ),
-      onPressed: () {},
-    ),
-  ),
-],
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/notifications.svg',
+              height: 24,
+              width: 24,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/settings.svg',
+                height: 24,
+                width: 24,
+                color: Colors.black,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -128,38 +141,85 @@ class ActivityScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            SizedBox(height: 20),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.face),
-            label: 'bondy',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.extension),
-            label: 'activities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.medical_services_outlined),
-            label: 'pediatricians',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'profile',
-          ),
-        ],
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(top: 5), // Added top padding for height
+        decoration: BoxDecoration(
+          color: Color(0xFFFDFDFD), // Background Color
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05), // 5% opacity
+              offset: Offset(0, 4), // X: 0, Y: 4
+              blurRadius: 9.3, // Blur
+              spreadRadius: 9, // Spread
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent, // Make it transparent to show the container color
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed, // Ensure no shifting behavior
+          elevation: 0, // Remove shadow if any
+          items: [
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                _selectedIndex == 0
+                    ? 'assets/icons/dashboard_selected.svg'
+                    : 'assets/icons/dashboard.svg',
+                height: 24,
+                width: 24,
+              ),
+              label: 'Dashboard',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                _selectedIndex == 1
+                    ? 'assets/icons/bondy_selected.svg'
+                    : 'assets/icons/bondy.svg',
+                height: 24,
+                width: 24,
+              ),
+              label: 'Bondy',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                _selectedIndex == 2
+                    ? 'assets/icons/activities_selected.svg'
+                    : 'assets/icons/activities.svg',
+                height: 24,
+                width: 24,
+              ),
+              label: 'Activities',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                _selectedIndex == 3
+                    ? 'assets/icons/pediatricians_selected.svg'
+                    : 'assets/icons/pediatricians.svg',
+                height: 24,
+                width: 24,
+              ),
+              label: 'Pediatricians',
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                _selectedIndex == 4
+                    ? 'assets/icons/profile_selected.svg'
+                    : 'assets/icons/profile.svg',
+                height: 24,
+                width: 24,
+              ),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }
