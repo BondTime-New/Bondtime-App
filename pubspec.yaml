@@ -32,7 +32,8 @@ flutter:
     - assets/icons/next.svg
     - assets/icons/previous.svg
     - assets/icons/bondtime_logo.svg
-
+    - assets/icons/notifications.svg
+    - assets/icons/settings.svg
 
   fonts:
     - family: InterTight

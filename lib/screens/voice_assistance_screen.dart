@@ -86,6 +86,7 @@ class _VoiceAssistanceScreenState extends State<VoiceAssistanceScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
+          leadingWidth: 30, // Reduced gap between back icon and logo
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
@@ -96,14 +97,12 @@ class _VoiceAssistanceScreenState extends State<VoiceAssistanceScreen> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'BondTime',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                ),
+              // SVG Logo
+              SvgPicture.asset(
+                'assets/icons/bondtime_logo.svg',
+                height: 18,
               ),
+              // Voice Assistance Text
               Text(
                 'Voice Assistance',
                 style: TextStyle(
@@ -287,7 +286,6 @@ class _VoiceAssistanceScreenState extends State<VoiceAssistanceScreen> {
                       SizedBox(height: 20),
                       Row(
                         children: [
-                          // No, Continue Button
                           OutlinedButton(
                             onPressed: togglePopup,
                             style: OutlinedButton.styleFrom(

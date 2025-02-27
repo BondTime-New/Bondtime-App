@@ -92,30 +92,42 @@ class _ActivityScreenTwoState extends State<ActivityScreenTwo> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        leadingWidth: 30, // Reduced padding between back arrow and logo
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
-          'BondTime',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-          ),
+        title: SvgPicture.asset(
+          'assets/icons/bondtime_logo.svg', // Path to your SVG logo
+          height: 18, // Set height to 22px
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_outlined, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.settings_outlined, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
+  // Notifications Icon - Same as ActivityScreen
+  IconButton(
+    icon: SvgPicture.asset(
+      'assets/icons/notifications.svg',
+      height: 24,
+      width: 24,
+      color: Colors.black,
+    ),
+    onPressed: () {},
+  ),
+  // Settings Icon - Same as ActivityScreen
+  Padding(
+    padding: const EdgeInsets.only(right: 10.0), // Same padding as ActivityScreen
+    child: IconButton(
+      icon: SvgPicture.asset(
+        'assets/icons/settings.svg',
+        height: 24,
+        width: 24,
+        color: Colors.black,
+      ),
+      onPressed: () {},
+    ),
+  ),
+],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
