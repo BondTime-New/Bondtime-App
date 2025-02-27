@@ -7,7 +7,7 @@ class OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFDFD), // 🔥 Updated Background Color
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -59,7 +59,9 @@ class OnboardingScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    _buildButton("Sign up", isPrimary: false, onTap: () {}),
+                    _buildButton("Sign up", isPrimary: false, onTap: () {
+                      Navigator.pushNamed(context, '/sign-up');
+                    }),
                     const SizedBox(height: 10),
                     _buildButton("Sign in", isPrimary: true, onTap: () {
                       Navigator.pushNamed(context, '/sign-in');
