@@ -45,7 +45,7 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
       child: Scaffold(
         backgroundColor: Color(0xFFFEFEFE),
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70), // 🔥 Adjusted height for logo
+          preferredSize: Size.fromHeight(45), // 🔥 Adjusted height for logo
           child: Container(
             color: Colors.white,
             child: Stack(
@@ -70,35 +70,110 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Search Bar
+            // Search Bar with Dynamic Color Change on Focus
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                focusNode: _searchFocusNode,
-                decoration: InputDecoration(
-                  hintText: 'Search Pediatricians',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Color(0xFFF5F5F5),
-                ),
+              child: StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return Focus(
+                    onFocusChange: (hasFocus) {
+                      setState(() {});
+                    },
+                    child: TextField(
+                      focusNode: _searchFocusNode,
+                      style: TextStyle(
+                        color:
+                            _searchFocusNode.hasFocus
+                                ? Colors
+                                    .black // 🔥 Black when focused
+                                : Color(
+                                  0xFFC9C9C9,
+                                ), // 🔥 #C9C9C9 when not focused
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Search Pediatricians',
+                        hintStyle: TextStyle(
+                          color:
+                              _searchFocusNode.hasFocus
+                                  ? Colors
+                                      .black // 🔥 Black when focused
+                                  : Color(
+                                    0xFFC9C9C9,
+                                  ), // 🔥 #C9C9C9 when not focused
+                        ),
+                        suffixIcon: Icon(
+                          Icons.search,
+                          color:
+                              _searchFocusNode.hasFocus
+                                  ? Colors
+                                      .black // 🔥 Black when focused
+                                  : Color(
+                                    0xFFC9C9C9,
+                                  ), // 🔥 #C9C9C9 when not focused
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(
+                            color: Color(0xFFC9C9C9), // 🔥 #C9C9C9 by default
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(
+                            color: Color(
+                              0xFFC9C9C9,
+                            ), // 🔥 #C9C9C9 when not focused
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(
+                            color: Colors.black, // 🔥 Black when focused
+                            width: 1,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: Color(
+                          0xFFF5F5F5,
+                        ), // 🔥 Background Color (unchanged)
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 20,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
 
-            // Tab Bar for Suggested and Favorites
-            TabBar(
-              controller: _tabController,
-              labelColor: Color(0xFF5A87FE),
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: Color(0xFF5A87FE),
-              labelStyle: TextStyle(
-                fontFamily: 'InterTight', // 🔥 Updated Font
-                fontWeight: FontWeight.bold,
+            // Perfectly Aligned Tab Bar to the Extreme Left
+            Transform.translate(
+              offset: Offset(
+                -30,
+                0,
+              ), // 🔥 Move 20 pixels to the left (Adjust this value)
+              child: TabBar(
+                controller: _tabController,
+                isScrollable:
+                    true, // 🔥 Keeps the tabs compact and left-aligned
+                labelColor: Colors.black, // 🔥 Active Tab Color to Black
+                unselectedLabelColor: Color(
+                  0xFFC9C9C9,
+                ), // 🔥 Inactive Tab Color to #C9C9C9
+                indicator: BoxDecoration(), // 🔥 Removes the underline
+                labelStyle: TextStyle(
+                  fontFamily: 'InterTight', // 🔥 Updated Font
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16, // 🔥 Adjust size as needed
+                ),
+                labelPadding: EdgeInsets.only(
+                  right: 15,
+                ), // 🔥 Space between the tabs
+                tabs: [Tab(text: 'Suggested'), Tab(text: 'Favorites')],
               ),
-              tabs: [Tab(text: 'Suggested'), Tab(text: 'Favorites')],
             ),
 
             // Tab Views
@@ -120,8 +195,6 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                   ),
 
                   // 🔥 Favorites Tab - Displaying Favorited Pediatricians
-                  // 🔥 Updated Favorites Tab with Remove Option
-                  // 🔥 Update the Favorites Tab
                   Consumer<FavoritesProvider>(
                     builder: (context, favoritesProvider, child) {
                       // Get list of favorites
@@ -342,9 +415,16 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
     String imagePath,
   ) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      color: Color(0xFFF5F5F5), // 🔥 Background color changed to #F5F5F5
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: Colors.black, // 🔥 Thin black border added
+          width: 1, // Adjust thickness here
+        ),
+      ),
       margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      elevation: 2,
+      elevation: 0, // 🔥 Removed shadow
       child: Padding(
         padding: const EdgeInsets.all(15.0), // 🔥 Added more padding
         child: Column(
@@ -395,50 +475,54 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
             ),
 
             SizedBox(height: 15), // 🔥 Added more space between sections
-            // 🔥 Action Buttons Aligned at the Bottom
+            // 🔥 Action Buttons Aligned Closer to Reserve Button
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+                  MainAxisAlignment.start, // 🔥 Align all to the start (left)
               children: [
-                // Reserve Button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => PediatricianDetailScreen(
-                              pediatricianName: name, // 🔥 Pass the Name Here
-                            ),
+                // Reserve Button with Increased Width
+                SizedBox(
+                  width: 109, // 🔥 Adjust this value for more width
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => PediatricianDetailScreen(
+                                pediatricianName: name, // 🔥 Pass the Name Here
+                              ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 12,
+                      ), // 🔥 Vertical padding only
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  ),
-                  child: Text(
-                    'Reserve',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'InterTight', // 🔥 Updated Font
-                      fontSize: 14,
+                    child: Text(
+                      'Reserve',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'InterTight', // 🔥 Updated Font
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ),
 
-                // 🔥 SMS and Call Buttons with SVG Icons
+                SizedBox(width: 10), // 🔥 Space between Reserve and SMS Button
+                // 🔥 SMS and Call Buttons with No Extra Padding
                 Row(
+                  mainAxisSize:
+                      MainAxisSize.min, // 🔥 Only take as much space as needed
                   children: [
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icons/sms.svg',
-                        width: 37,
-                        height: 37,
-                      ),
-                      onPressed: () async {
+                    GestureDetector(
+                      onTap: () async {
                         final Uri smsUri = Uri(
                           scheme: 'sms',
                           path: '1234567890',
@@ -449,15 +533,20 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                           logger.e('Could not launch SMS app');
                         }
                       },
-                    ),
-                    SizedBox(width: 10), // 🔥 Space between icons
-                    IconButton(
-                      icon: SvgPicture.asset(
-                        'assets/icons/tel.svg',
-                        width: 37,
-                        height: 37,
+                      child: Container(
+                        padding: EdgeInsets.zero, // 🔥 No extra padding
+                        child: SvgPicture.asset(
+                          'assets/icons/sms.svg',
+                          width: 44,
+                          height: 44,
+                        ),
                       ),
-                      onPressed: () async {
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ), // 🔥 Minimum gap (adjust to 1 or 0 if needed)
+                    GestureDetector(
+                      onTap: () async {
                         final Uri telUri = Uri(
                           scheme: 'tel',
                           path: '1234567890',
@@ -468,6 +557,14 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                           logger.e('Could not launch Phone app');
                         }
                       },
+                      child: Container(
+                        padding: EdgeInsets.zero, // 🔥 No extra padding
+                        child: SvgPicture.asset(
+                          'assets/icons/tel.svg',
+                          width: 44,
+                          height: 44,
+                        ),
+                      ),
                     ),
                   ],
                 ),

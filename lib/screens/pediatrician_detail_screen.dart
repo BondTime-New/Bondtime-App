@@ -19,16 +19,65 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
   // Added State Variable to Track Favorite Status
   bool isFavorite = false;
 
+  // 🔥 NEW: ScrollController and Variables for Opacity and Elevation
+  final ScrollController _scrollController = ScrollController();
+  double _opacity = 0.0; // Controls AppBar Opacity
+  // Controls AppBar Elevation
+
+  @override
+  void initState() {
+    super.initState();
+    // 🔥 NEW: Listener for Scroll Position
+    _scrollController.addListener(() {
+      double offset = _scrollController.offset;
+      setState(() {
+        // 🔥 UPDATED: Gradually increase opacity and elevation
+        _opacity = (offset / 200).clamp(0, 1);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // 🔥 NEW: Dispose ScrollController
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFEFEFE), // Off-White Background
+      // Use this to allow body to go behind the AppBar
+      extendBodyBehindAppBar: true,
+
+      // 🔥 UPDATED: Transparent AppBar with Dynamic Opacity and Elevation
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80), // Custom AppBar Height
+        preferredSize: Size.fromHeight(
+          100,
+        ), // Custom Height for Floating Effect
         child: Container(
-          color: Colors.white,
+          color: Colors.white.withAlpha(
+            (_opacity * 255).toInt(),
+          ), // 🔥 Dynamic Opacity
           child: Stack(
             children: [
+              // 🔥 Dynamic Elevation for Shadow
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withAlpha(
+                          (_opacity * 0.2 * 255).toInt(),
+                        ), // Dynamic Shadow
+                        blurRadius: 20,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               // BondTime Logo at Top-Left
               Positioned(
                 top: 35,
@@ -38,10 +87,14 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                   width: 112,
                   height: 22,
                   fit: BoxFit.contain,
+                  colorFilter: ColorFilter.mode(
+                    Color(0xFF212529),
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
 
-              // Arrow-Back Button Below the Logo
+              // 🔥 Arrow-Back Button Below the Logo
               Positioned(
                 top: 58,
                 left: 3,
@@ -51,7 +104,7 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                     width: 34,
                     height: 34,
                     colorFilter: ColorFilter.mode(
-                      Color(0xFF212529), // Dark Neutral for consistency
+                      Color(0xFF212529), // 🔥 Always Dark Neutral
                       BlendMode.srcIn,
                     ),
                   ),
@@ -65,6 +118,7 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
 
       // Main Body
       body: SingleChildScrollView(
+        controller: _scrollController, // 🔥 NEW: Attach ScrollController
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -72,7 +126,7 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
             // Profile Picture Section
             Container(
               width: double.infinity,
-              height: 250,
+              height: 323,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/doctor.jpg'),
@@ -195,7 +249,12 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
               offset: Offset(0, -38), // Cleaner Overlap
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.fromLTRB(
+                  20,
+                  20,
+                  20,
+                  20,
+                ), // 🔥 Reduced top padding
                 margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                   color: Color(0xFFFEFEFE), // Consistent Background Color
@@ -203,78 +262,100 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x14000000),
-                      spreadRadius: 0,
-                      blurRadius: 20,
-                      offset: Offset(0, 4),
-                    ),
-                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Name and Title
-                    Text(
-                      'Prof. Ruwan Danishka',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF212529),
-                        fontFamily: 'InterTight',
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'Consultant Pediatrician - General Hospital',
-                        style: TextStyle(
-                          color: Color(0xFF5A87FE),
-                          fontFamily: 'InterTight',
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-
-                    // Info Cards
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                    // Name and Title (Aligned to the Left)
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        mainAxisSize:
+                            MainAxisSize
+                                .min, // Compact layout with no extra space
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          infoCard(
-                            '200+',
-                            'Online Patients',
-                            'assets/icons/online-patients.svg',
+                          Text(
+                            'Prof. Ruwan Danishka',
+                            style: TextStyle(
+                              fontSize: 20.16,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF212529),
+                              fontFamily: 'InterTight',
+                              height: 1.0, // Tighter line height to reduce gap
+                            ),
                           ),
-                          infoCard(
-                            '30+',
-                            'Home Visits',
-                            'assets/icons/home-visits.svg',
-                          ),
-                          infoCard(
-                            '2+',
-                            'Years Experience',
-                            'assets/icons/years-experience.svg',
-                          ),
-                          infoCard(
-                            '12+',
-                            'Locations to meet',
-                            'assets/icons/locations-to-meat.svg',
+                          SizedBox(
+                            height: 4,
+                          ), // Adjust as needed for tighter spacing
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              'Consultant Pediatrician - General Hospital',
+                              style: TextStyle(
+                                fontSize: 16.15,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF5A87FE),
+                                fontFamily: 'InterTight',
+                                height: 1.0, // Tighter line height
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
+
+                    // 🔥 Exact 20px Gap Between Name and Title and Info Cards
+                    SizedBox(height: 20), // 🔥 Precise and consistent gap
+                    // Info Cards
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          int crossAxisCount =
+                              constraints.maxWidth > 600 ? 3 : 2;
+                          return GridView.count(
+                            crossAxisCount: crossAxisCount,
+                            crossAxisSpacing: 18,
+                            mainAxisSpacing:
+                                0, // 🔥 No extra space between rows
+                            shrinkWrap: true,
+                            padding:
+                                EdgeInsets
+                                    .zero, // 🔥 No padding inside the GridView
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                              infoCard(
+                                '200+',
+                                'Online Patients',
+                                'assets/icons/online-patients.svg',
+                              ),
+                              infoCard(
+                                '30+',
+                                'Home Visits',
+                                'assets/icons/home-visits.svg',
+                              ),
+                              infoCard(
+                                '2+',
+                                'Years Experience',
+                                'assets/icons/years-experience.svg',
+                              ),
+                              infoCard(
+                                '12+',
+                                'Locations to meet',
+                                'assets/icons/locations-to-meat.svg',
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+
                     SizedBox(height: 20),
 
                     // Action Buttons
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -291,7 +372,11 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                             ),
                             child: Text(
                               'Check Availability',
-                              style: TextStyle(fontFamily: 'InterTight'),
+                              style: TextStyle(
+                                fontFamily: 'InterTight',
+                                fontSize: 17.68,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                           SizedBox(height: 10),
@@ -309,6 +394,8 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'InterTight',
+                                fontSize: 17.68,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -359,25 +446,23 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
       decoration: BoxDecoration(
         color: Color(0xFFF5F5F5),
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Color(0xFFE0E0E0)), // Light grey border
+        border: Border.all(color: Color(0xFF547DE8)), // Light grey border
       ),
       child: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(12.0), // Reduced padding for better fit
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // White Circle Around SVG Icon
             Container(
-              width: 40, // Circle Size
-              height: 40, // Circle Size
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
-                color: Colors.white, // White Background
-                shape: BoxShape.circle, // Circular Shape
+                color: Colors.white,
+                shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withAlpha(
-                      13,
-                    ), // Equivalent to 0.05 opacity
+                    color: Colors.black.withAlpha(13),
                     spreadRadius: 2,
                     blurRadius: 10,
                     offset: Offset(0, 4),
@@ -387,31 +472,37 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
               child: Center(
                 child: SvgPicture.asset(
                   iconPath,
-                  width: 24, // Icon Size
-                  height: 24, // Icon Size
+                  width: 24,
+                  height: 24,
                   fit: BoxFit.contain,
                   colorFilter: ColorFilter.mode(
-                    Color(0xFF5A87FE), // BondTime Blue
+                    Color(0xFF5A87FE),
                     BlendMode.srcIn,
-                  ), // Icon Color (BondTime Blue)
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 8), // Reduced to save space
             Text(
               title,
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                fontSize: 20.16,
+                fontWeight: FontWeight.w500,
                 fontFamily: 'InterTight',
               ),
             ),
-            Text(
-              subtitle,
-              style: TextStyle(
-                color: Colors.grey,
-                fontFamily: 'InterTight',
-                fontSize: 12,
+            SizedBox(height: 4), // Reduced to save space
+            // Wrapped in Flexible for better text wrapping
+            Flexible(
+              child: Text(
+                subtitle,
+                textAlign: TextAlign.center, // Centered text for better look
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontFamily: 'InterTight',
+                  fontSize: 15.01,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ],
