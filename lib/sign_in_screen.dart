@@ -32,7 +32,10 @@ class _SignInScreenState extends State<SignInScreen> {
   void _validateForm() {
     setState(() {
       _emailError = _validateEmail(_emailController.text);
-      _isFormValid = _emailError == null && _passwordController.text.isNotEmpty;
+      _isFormValid =
+          _emailController.text.isNotEmpty && // Ensure email is filled
+              _emailError == null && // Ensure email is valid
+              _passwordController.text.isNotEmpty; // Ensure password is filled
     });
   }
 
@@ -85,13 +88,13 @@ class _SignInScreenState extends State<SignInScreen> {
             _buildTextField("Enter your password", _passwordController, true,
                 "assets/images/pw.svg"),
             const SizedBox(height: 20),
-
-            // Button is always visible but only clickable when valid
             ElevatedButton(
-              onPressed:
-                  _isFormValid ? () {} : null, // Only clickable when valid
+              onPressed: _isFormValid
+                  ? () {}
+                  : null, // Only clickable when both fields are filled
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black, // Always black
+                backgroundColor:
+                    _isFormValid ? Colors.black : const Color(0xFFA0A0A0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(13),
                 ),
@@ -102,7 +105,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-
             const SizedBox(height: 10),
             Center(
               child: TextButton(
@@ -140,7 +142,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ],
             ),
             const SizedBox(height: 20),
-
             _buildSocialButton(
                 "Continue with Apple", "assets/images/apple.svg"),
             const SizedBox(height: 15),
