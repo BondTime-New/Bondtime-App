@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'sign_up_screen.dart'; // ✅ Correct Import
+import 'sign_in_screen.dart'; // Import the SignInScreen file
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'InterTight',
-        scaffoldBackgroundColor: Colors.white,
       ),
-      home: const SignUpScreen(), // Ensure SignUpScreen exists
+      home: const SignInScreen(), // Set SignInScreen as the home page
     );
   }
 }

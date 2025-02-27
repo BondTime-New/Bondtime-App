@@ -1,27 +1,32 @@
-name: sign_up
-description: "A new Flutter project."
+name: sign_in
+description: A Flutter app with a custom sign-in UI.
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.1
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/fonts/
+    - assets/images/email.svg
+    - assets/images/pw.svg
+    - assets/images/apple.svg
+    - assets/images/google.svg
+    - assets/images/facebook.svg
 
   fonts:
     - family: InterTight

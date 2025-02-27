@@ -1,6 +1,6 @@
 {
-    "name": "sign_up",
-    "short_name": "sign_up",
+    "name": "sign_in",
+    "short_name": "sign_in",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
