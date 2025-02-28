@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -15,25 +16,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final FocusNode _firstNameFocus = FocusNode();
-  final FocusNode _lastNameFocus = FocusNode();
-  final FocusNode _emailFocus = FocusNode();
-  final FocusNode _passwordFocus = FocusNode();
-  final FocusNode _confirmPasswordFocus = FocusNode();
-
   bool _isFormValid = false;
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
   String? _emailError;
   String? _passwordError;
+  bool _isEmailValid = true;
 
   @override
   void initState() {
     super.initState();
     _firstNameController.addListener(_validateForm);
     _lastNameController.addListener(_validateForm);
-    _emailController.addListener(_validateForm);
+    _emailController.addListener(() {
+      _validateEmail();
+      _validateForm();
+    });
     _passwordController.addListener(_validateForm);
     _confirmPasswordController.addListener(_validateForm);
   }
@@ -45,18 +44,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
-
-    _firstNameFocus.dispose();
-    _lastNameFocus.dispose();
-    _emailFocus.dispose();
-    _passwordFocus.dispose();
-    _confirmPasswordFocus.dispose();
-
     super.dispose();
   }
 
   void _validateForm() {
-    _validateEmail();
     _validatePassword();
 
     setState(() {
@@ -65,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _emailController.text.isNotEmpty &&
           _passwordController.text.isNotEmpty &&
           _confirmPasswordController.text.isNotEmpty &&
-          _emailError == null &&
+          _isEmailValid &&
           _passwordError == null;
     });
   }
@@ -75,11 +66,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final emailRegex =
         RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
 
-    if (email.isEmpty || !emailRegex.hasMatch(email)) {
-      _emailError = "Please enter a valid email address";
-    } else {
-      _emailError = null;
-    }
+    setState(() {
+      _isEmailValid = email.isEmpty || emailRegex.hasMatch(email);
+      _emailError = _isEmailValid ? null : "Please enter a valid email address";
+    });
   }
 
   void _validatePassword() {
@@ -102,124 +92,133 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white, // Ensures the entire background remains white
-      child: Scaffold(
-        backgroundColor: Colors.white, // Ensures Scaffold itself is also white
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(
-                  context); // This will navigate back to the previous screen
-            },
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
             children: [
-              const Text(
-                "Tell us about you",
-                style: TextStyle(
-                  fontFamily: 'InterTight',
-                  fontSize: 32.5,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF111111),
-                ),
-              ),
-              const SizedBox(height: 34),
-              const Text(
-                "Every detail helps us support your baby’s journey.",
-                style: TextStyle(
-                  fontFamily: 'InterTight',
-                  fontSize: 17.2,
-                  fontWeight: FontWeight.w300,
-                  color: Color(0xFF8D8D8D),
-                ),
-              ),
-              const SizedBox(height: 34),
-              _buildLabeledTextField("Enter Your Name", "First Name",
-                  _firstNameController, _firstNameFocus),
-              const SizedBox(height: 20),
-              _buildLabeledTextField(
-                  "", "Last Name", _lastNameController, _lastNameFocus),
-              const SizedBox(height: 20),
-              _buildLabeledTextField(
-                "Enter Your Email",
-                "example@email.com",
-                _emailController,
-                _emailFocus,
-                errorText: _emailError,
-              ),
-              const SizedBox(height: 20),
-              _buildLabeledTextField(
-                "Create a Strong Password",
-                "Enter a password",
-                _passwordController,
-                _passwordFocus,
-                isPassword: true,
-                isPasswordVisible: _isPasswordVisible,
-                togglePasswordVisibility: () {
-                  setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              _buildLabeledTextField(
-                "",
-                "Re-enter the password",
-                _confirmPasswordController,
-                _confirmPasswordFocus,
-                isPassword: true,
-                isPasswordVisible: _isConfirmPasswordVisible,
-                togglePasswordVisibility: () {
-                  setState(() {
-                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                  });
-                },
-                errorText: _passwordError,
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "We collect this info to personalize activities and track growth. Your data is secure and used only to enhance your experience.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'InterTight',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF938E8A),
-                ),
-              ),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: _isFormValid ? _onSubmit : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: _isFormValid
-                      ? const Color(0xFF111111)
-                      : Colors.grey.shade400,
-                  minimumSize: const Size(370, 58),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-                child: const Text(
-                  "Next",
-                  style: TextStyle(
-                    fontFamily: 'InterTight',
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Tell us about you",
+                        style: TextStyle(
+                          fontFamily: 'InterTight',
+                          fontSize: 32.5,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF111111),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        "Every detail helps us support your baby’s journey.",
+                        style: TextStyle(
+                          fontFamily: 'InterTight',
+                          fontSize: 17.2,
+                          fontWeight: FontWeight.w300,
+                          color: Color(0xFF8D8D8D),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      _buildLabeledTextField("Enter Your Name", "First Name",
+                          _firstNameController),
+                      const SizedBox(height: 14),
+                      _buildLabeledTextField(
+                          "", "Last Name", _lastNameController),
+                      const SizedBox(height: 14),
+                      _buildLabeledTextField(
+                        "Enter Your Email",
+                        "example@email.com",
+                        _emailController,
+                        errorText: _isEmailValid ? null : _emailError,
+                        svgIconPath: "assets/images/email.svg",
+                      ),
+                      const SizedBox(height: 14),
+                      _buildLabeledTextField(
+                        "Create a Strong Password",
+                        "Enter a password",
+                        _passwordController,
+                        isPassword: true,
+                        isPasswordVisible: _isPasswordVisible,
+                        togglePasswordVisibility: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                        svgIconPath: "assets/images/pw.svg",
+                      ),
+                      const SizedBox(height: 14),
+                      _buildLabeledTextField(
+                        "",
+                        "Re-enter the password",
+                        _confirmPasswordController,
+                        isPassword: true,
+                        isPasswordVisible: _isConfirmPasswordVisible,
+                        togglePasswordVisibility: () {
+                          setState(() {
+                            _isConfirmPasswordVisible =
+                                !_isConfirmPasswordVisible;
+                          });
+                        },
+                        errorText: _passwordError,
+                        svgIconPath: "assets/images/pw.svg",
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Text(
+                  "We collect this info to personalize activities and track growth. Your data is secure and used only to enhance your experience.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'InterTight',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF938E8A),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: ElevatedButton(
+                  onPressed: _isFormValid ? _onSubmit : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _isFormValid
+                        ? const Color(0xFF111111)
+                        : Colors.grey.shade400,
+                    minimumSize: const Size(double.infinity, 58),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                  child: const Text(
+                    "Next",
+                    style: TextStyle(
+                      fontFamily: 'InterTight',
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ],
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -227,12 +226,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buildLabeledTextField(
     String label,
     String hint,
-    TextEditingController controller,
-    FocusNode focusNode, {
+    TextEditingController controller, {
     bool isPassword = false,
     bool isPasswordVisible = false,
     VoidCallback? togglePasswordVisibility,
     String? errorText,
+    String? svgIconPath,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,17 +249,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (label.isNotEmpty) const SizedBox(height: 5),
         TextField(
           controller: controller,
-          focusNode: focusNode,
           obscureText: isPassword && !isPasswordVisible,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
             hintText: hint,
+            hintStyle: const TextStyle(
+                color: Color(0xFFBDBDBD)), // Placeholder text color changed
             errorText: errorText,
+            prefixIcon: svgIconPath != null
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SvgPicture.asset(svgIconPath, height: 20, width: 20),
+                  )
+                : null,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(11),
-              borderSide:
-                  const BorderSide(color: Color(0xFFBDBDBD), width: 1.5),
+              borderSide: const BorderSide(color: Color(0xFFBDBDBD)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(11),
+              borderSide: const BorderSide(color: Color(0xFFBDBDBD)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(11),
+              borderSide: const BorderSide(color: Colors.black),
             ),
           ),
         ),
