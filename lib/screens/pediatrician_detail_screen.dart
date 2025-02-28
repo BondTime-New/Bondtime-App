@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/favorites_provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../widgets/custom_bottom_navigation_bar.dart';
+import '../widgets/info_card.dart';
+import '../widgets/profile_picture_section.dart';
+import '../widgets/action_buttons.dart';
 
 // Changed from StatelessWidget to StatefulWidget
 class PediatricianDetailScreen extends StatefulWidget {
@@ -124,124 +126,9 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Profile Picture Section
-            Container(
-              width: double.infinity,
-              height: 323,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/doctor.jpg'),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  // Online Status Badge
-                  Positioned(
-                    left: 20,
-                    bottom: 40,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(25),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.circle, color: Colors.green, size: 10),
-                          SizedBox(width: 5),
-                          Text(
-                            'Online',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                              fontFamily: 'InterTight',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Rating Badge
-                  Positioned(
-                    left: 100,
-                    bottom: 40,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(25),
-                            spreadRadius: 1,
-                            blurRadius: 10,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.amber, size: 14),
-                          SizedBox(width: 5),
-                          Text(
-                            '5.0',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                              fontFamily: 'InterTight',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // 🔥 UPDATED: Favorite Button using Consumer<FavoritesProvider>
-                  Positioned(
-                    right: 20,
-                    bottom: 40,
-                    child: Consumer<FavoritesProvider>(
-                      builder: (context, favoritesProvider, child) {
-                        // Check if this pediatrician is in the favorites list
-                        bool isFavorite = favoritesProvider.isFavorite(
-                          widget.pediatricianName,
-                        );
-
-                        return IconButton(
-                          icon: Icon(
-                            isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border, // Toggle Icon
-                            color: isFavorite ? Colors.red : Colors.grey,
-                          ),
-                          onPressed: () {
-                            // 🔥 Toggle Favorite Status
-                            favoritesProvider.toggleFavorite(
-                              widget.pediatricianName,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            ProfilePictureSection(
+              imagePath: 'assets/images/doctor.jpg',
+              pediatricianName: widget.pediatricianName,
             ),
 
             // Overlapping Container
@@ -325,25 +212,25 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                                     .zero, // 🔥 No padding inside the GridView
                             physics: NeverScrollableScrollPhysics(),
                             children: [
-                              infoCard(
-                                '200+',
-                                'Online Patients',
-                                'assets/icons/online-patients.svg',
+                              InfoCard(
+                                title: '200+',
+                                subtitle: 'Online Patients',
+                                iconPath: 'assets/icons/online-patients.svg',
                               ),
-                              infoCard(
-                                '30+',
-                                'Home Visits',
-                                'assets/icons/home-visits.svg',
+                              InfoCard(
+                                title: '30+',
+                                subtitle: 'Home Visits',
+                                iconPath: 'assets/icons/home-visits.svg',
                               ),
-                              infoCard(
-                                '2+',
-                                'Years Experience',
-                                'assets/icons/years-experience.svg',
+                              InfoCard(
+                                title: '2+',
+                                subtitle: 'Years Experience',
+                                iconPath: 'assets/icons/years-experience.svg',
                               ),
-                              infoCard(
-                                '12+',
-                                'Locations to meet',
-                                'assets/icons/locations-to-meat.svg',
+                              InfoCard(
+                                title: '12+',
+                                subtitle: 'Locations to meet',
+                                iconPath: 'assets/icons/locations-to-meat.svg',
                               ),
                             ],
                           );
@@ -354,54 +241,7 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                     SizedBox(height: 20),
 
                     // Action Buttons
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Color(0xFF212529),
-                              side: BorderSide(color: Color(0xFF212529)),
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: Text(
-                              'Check Availability',
-                              style: TextStyle(
-                                fontFamily: 'InterTight',
-                                fontSize: 17.68,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: Text(
-                              'Book Now',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'InterTight',
-                                fontSize: 17.68,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ActionButtons(),
                   ],
                 ),
               ),
@@ -411,103 +251,7 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
       ),
 
       // Bottom Navigation Bar (Fixed at the Bottom)
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 3, // Highlight the current tab
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFF5A87FE),
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.child_friendly),
-            label: 'Bondy',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.accessibility_new),
-            label: 'Activities',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_hospital),
-            label: 'Pediatricians',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
-    );
-  }
-
-  // Info Card Widget (Responsive)
-  Widget infoCard(String title, String subtitle, String iconPath) {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      decoration: BoxDecoration(
-        color: Color(0xFFF5F5F5),
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Color(0xFF547DE8)), // Light grey border
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(12.0), // Reduced padding for better fit
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // White Circle Around SVG Icon
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(13),
-                    spreadRadius: 2,
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  iconPath,
-                  width: 24,
-                  height: 24,
-                  fit: BoxFit.contain,
-                  colorFilter: ColorFilter.mode(
-                    Color(0xFF5A87FE),
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 8), // Reduced to save space
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 20.16,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'InterTight',
-              ),
-            ),
-            SizedBox(height: 4), // Reduced to save space
-            // Wrapped in Flexible for better text wrapping
-            Flexible(
-              child: Text(
-                subtitle,
-                textAlign: TextAlign.center, // Centered text for better look
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontFamily: 'InterTight',
-                  fontSize: 15.01,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 3),
     );
   }
 }
