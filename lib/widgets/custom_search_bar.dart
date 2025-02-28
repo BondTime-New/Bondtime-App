@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class CustomSearchBar extends StatefulWidget {
   final FocusNode searchFocusNode;
   final String hintText;
+  final ValueChanged<String> onChanged; // 🔥 Callback for search input
 
   const CustomSearchBar({
     super.key,
     required this.searchFocusNode,
+    required this.onChanged,
     this.hintText = 'Search Pediatricians',
   });
 
@@ -19,6 +21,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   Widget build(BuildContext context) {
     return TextField(
       focusNode: widget.searchFocusNode,
+      onChanged: widget.onChanged, // 🔥 Send input to parent widget
       style: TextStyle(
         color:
             widget.searchFocusNode.hasFocus

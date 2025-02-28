@@ -24,6 +24,9 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
   // 🔥 Added FocusNode for Search Bar
   final FocusNode _searchFocusNode = FocusNode();
 
+  // 🔥 Search Query State
+  String _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +38,20 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
     _tabController.dispose();
     _searchFocusNode.dispose(); // 🔥 Dispose the FocusNode
     super.dispose();
+  }
+
+  // 🔥 Filtered Pediatricians List
+  List<Map<String, String>> get _filteredPediatricians {
+    if (_searchQuery.isEmpty) {
+      return pediatricians;
+    }
+    return pediatricians
+        .where(
+          (pediatrician) => pediatrician['name']!.toLowerCase().contains(
+            _searchQuery.toLowerCase(),
+          ),
+        )
+        .toList();
   }
 
   @override
@@ -59,7 +76,14 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
             // Search Bar with Dynamic Color Change on Focus
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: CustomSearchBar(searchFocusNode: _searchFocusNode),
+              child: CustomSearchBar(
+                searchFocusNode: _searchFocusNode,
+                onChanged: (query) {
+                  setState(() {
+                    _searchQuery = query; // 🔥 Update search query
+                  });
+                },
+              ),
             ),
 
             // Perfectly Aligned Tab Bar to the Extreme Left
@@ -101,11 +125,11 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  // Suggested Tab
+                  // Suggested Tab with Filtered Pediatricians
                   ListView.builder(
-                    itemCount: pediatricians.length,
+                    itemCount: _filteredPediatricians.length,
                     itemBuilder: (context, index) {
-                      final pediatrician = pediatricians[index];
+                      final pediatrician = _filteredPediatricians[index];
                       return PediatricianCard(
                         name: pediatrician['name']!,
                         title: pediatrician['title']!,
