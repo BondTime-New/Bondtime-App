@@ -90,6 +90,9 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                                   0xFFC9C9C9,
                                 ), // 🔥 #C9C9C9 when not focused
                       ),
+                      cursorColor: Color(
+                        0xFF212529,
+                      ), // 🔥 Matching Neutral Dark Color
                       decoration: InputDecoration(
                         hintText: 'Search Pediatricians',
                         hintStyle: TextStyle(
@@ -172,6 +175,13 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                 labelPadding: EdgeInsets.only(
                   right: 15,
                 ), // 🔥 Space between the tabs
+                // 🔥 Customizing Ripple Effect and Background Color
+                splashFactory:
+                    NoSplash.splashFactory, // 🔥 Disable Ripple Effect
+                overlayColor: WidgetStateProperty.all(
+                  Colors.transparent,
+                ), // 🔥 No Overlay Color
+
                 tabs: [Tab(text: 'Suggested'), Tab(text: 'Favorites')],
               ),
             ),
@@ -183,7 +193,7 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                 children: [
                   // Suggested Tab
                   ListView.builder(
-                    itemCount: 3,
+                    itemCount: 5,
                     itemBuilder: (context, index) {
                       return _buildPediatricianCard(
                         context,
@@ -210,74 +220,123 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                         itemCount: favorites.length,
                         itemBuilder: (context, index) {
                           final name = favorites[index];
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+
+                          // 🔥 Wrap the Container with Padding for Margin
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15, // Horizontal Margin
+                              vertical: 10, // Vertical Margin
                             ),
-                            margin: EdgeInsets.symmetric(
-                              horizontal: 15,
-                              vertical: 10,
-                            ),
-                            elevation: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    Colors
+                                        .transparent, // Transparent to show Card color
+                                borderRadius: BorderRadius.circular(
+                                  20,
+                                ), // Rounded corners
+                                border: Border.all(
+                                  color: Color(
+                                    0xFF000000,
+                                  ), // 🔥 Border Color (Example: BondTime Blue)
+                                  width: 1, // Border width
+                                ),
+                              ),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    20,
+                                  ), // Rounded corners
+                                ),
+                                color: Color(
+                                  0xFFF5F5F5,
+                                ), // 🔥 Background Color for Card
+                                margin:
+                                    EdgeInsets
+                                        .zero, // No margin for perfect fit
+                                elevation: 3,
+                                shadowColor: Colors.black.withAlpha(
+                                  25,
+                                ), // Softer shadow
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // Profile Image
-                                      CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                          'assets/images/doctor.jpg',
-                                        ),
-                                        radius: 35,
-                                      ),
-                                      SizedBox(width: 15),
-
-                                      // Name and Title
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              name,
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'InterTight',
-                                              ),
-                                            ),
-                                            Text(
-                                              'Consultant Pediatrician',
-                                              style: TextStyle(
-                                                color: Colors.grey,
-                                                fontFamily: 'InterTight',
-                                              ),
-                                            ),
-                                            SizedBox(height: 5),
-                                            Row(
-                                              children: List.generate(
-                                                5,
-                                                (index) => Icon(
-                                                  Icons.star,
-                                                  color: Colors.amber,
-                                                  size: 16,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-
-                                      // 🔥 Responsive Buttons (Reserve and Remove)
-                                      Column(
+                                      Row(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                                            CrossAxisAlignment.start,
                                         children: [
+                                          // Name and Title
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  name,
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Color(0xFF212529),
+                                                    fontFamily: 'InterTight',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Consultant Pediatrician',
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontFamily: 'InterTight',
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 6),
+                                                Row(
+                                                  children: List.generate(
+                                                    5,
+                                                    (index) => Icon(
+                                                      Icons.star,
+                                                      color: Colors.amber,
+                                                      size: 16,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+
+                                          // Profile Image (Aligned to the Right)
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black.withAlpha(
+                                                    25,
+                                                  ),
+                                                  blurRadius: 8,
+                                                  offset: Offset(0, 4),
+                                                ),
+                                              ],
+                                            ),
+                                            child: CircleAvatar(
+                                              backgroundImage: AssetImage(
+                                                'assets/images/doctor.jpg',
+                                              ),
+                                              radius: 35,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 15),
+
+                                      // 🔥 Action Buttons (Reserve, Chat, Call, and Delete)
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          // Reserve Button - Black and Prominent
                                           ElevatedButton(
                                             onPressed: () {
                                               Navigator.push(
@@ -294,76 +353,150 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: Colors.black,
+                                              foregroundColor: Colors.white,
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 10,
+                                                horizontal: 25,
+                                              ), // Tighter Padding
+                                              minimumSize: Size(
+                                                0,
+                                                0,
+                                              ), // Remove minimum size constraint
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
+                                                    BorderRadius.circular(8),
                                               ),
+                                              elevation: 0,
+                                              shadowColor: Colors.transparent,
                                             ),
                                             child: Text(
                                               'Reserve',
-                                              style: TextStyle(fontSize: 12),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                fontFamily: 'InterTight',
+                                              ),
                                             ),
                                           ),
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
+
+                                          // 🔥 Reduce Gap between Reserve and SMS Button
+                                          SizedBox(width: 6), // Decreased width
+                                          // 🔥 SMS Button - Full Container without Border
+                                          SizedBox(
+                                            width:
+                                                42, // Width of the circular container
+                                            height:
+                                                42, // Height of the circular container
+                                            child: IconButton(
+                                              onPressed: () async {
+                                                final Uri smsUri = Uri(
+                                                  scheme: 'sms',
+                                                  path: '1234567890',
+                                                );
+                                                if (await canLaunchUrl(
+                                                  smsUri,
+                                                )) {
+                                                  await launchUrl(smsUri);
+                                                } else {
+                                                  logger.e(
+                                                    'Could not launch SMS app',
+                                                  );
+                                                }
+                                              },
+                                              padding:
+                                                  EdgeInsets
+                                                      .zero, // 🔥 Remove Internal Padding
+                                              constraints:
+                                                  BoxConstraints(), // 🔥 Remove Constraints
+                                              icon: SvgPicture.asset(
+                                                'assets/icons/sms.svg',
+                                                fit:
+                                                    BoxFit
+                                                        .contain, // 🔥 Make the SVG take full space
+                                                width:
+                                                    42, // Match container size
+                                                height:
+                                                    42, // Match container size
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              favoritesProvider.removeFavorite(
-                                                name,
-                                              );
-                                            },
+                                          ),
+
+                                          // 🔥 Reduce Gap between SMS and Tel Button
+                                          SizedBox(width: 6), // Decreased width
+                                          // 🔥 Tel Button - Full Container without Border
+                                          SizedBox(
+                                            width:
+                                                42, // Width of the circular container
+                                            height:
+                                                42, // Height of the circular container
+                                            child: IconButton(
+                                              onPressed: () async {
+                                                final Uri telUri = Uri(
+                                                  scheme: 'tel',
+                                                  path: '1234567890',
+                                                );
+                                                if (await canLaunchUrl(
+                                                  telUri,
+                                                )) {
+                                                  await launchUrl(telUri);
+                                                } else {
+                                                  logger.e(
+                                                    'Could not launch Phone app',
+                                                  );
+                                                }
+                                              },
+                                              padding:
+                                                  EdgeInsets
+                                                      .zero, // 🔥 Remove Internal Padding
+                                              constraints:
+                                                  BoxConstraints(), // 🔥 Remove Constraints
+                                              icon: SvgPicture.asset(
+                                                'assets/icons/tel.svg',
+                                                fit:
+                                                    BoxFit
+                                                        .contain, // 🔥 Make the SVG take full space
+                                                width:
+                                                    42, // Match container size
+                                                height:
+                                                    42, // Match container size
+                                              ),
+                                            ),
+                                          ),
+
+                                          // 🔥 Reduce Gap between Call and Delete Button
+                                          SizedBox(
+                                            width: 43.8,
+                                          ), // Decreased width
+                                          // 🔥 New Delete Button (Circular and Matching Style)
+                                          Container(
+                                            width:
+                                                42, // Adjust the width as needed
+                                            height:
+                                                42, // Adjust the height as needed
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                favoritesProvider
+                                                    .removeFavorite(name);
+                                              },
+                                              icon: Icon(
+                                                Icons.delete_outline,
+                                                color: Colors.red,
+                                                size:
+                                                    20, // Adjust the icon size as needed
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 10),
-
-                                  // 🔥 Action Buttons (Chat and Call) - Responsive Row
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // Chat Button
-                                      IconButton(
-                                        icon: Icon(Icons.chat_bubble_outline),
-                                        onPressed: () async {
-                                          final Uri smsUri = Uri(
-                                            scheme: 'sms',
-                                            path: '1234567890',
-                                          );
-                                          if (await canLaunchUrl(smsUri)) {
-                                            await launchUrl(smsUri);
-                                          } else {
-                                            logger.e(
-                                              'Could not launch SMS app',
-                                            );
-                                          }
-                                        },
-                                      ),
-
-                                      // Call Button
-                                      IconButton(
-                                        icon: Icon(Icons.phone),
-                                        onPressed: () async {
-                                          final Uri telUri = Uri(
-                                            scheme: 'tel',
-                                            path: '1234567890',
-                                          );
-                                          if (await canLaunchUrl(telUri)) {
-                                            await launchUrl(telUri);
-                                          } else {
-                                            logger.e(
-                                              'Could not launch Phone app',
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           );
