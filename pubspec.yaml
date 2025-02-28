@@ -36,20 +36,10 @@ flutter:
     - assets/icons/tel.svg
 
     - assets/images/doctor.jpg
-    - assets/icons/bondtime-logo.png
-    - assets/icons/arrow-back.png
-    - assets/icons/years-experience.png
-    - assets/icons/home-visits.png
-    - assets/icons/locations-to-meat.png
-    - assets/icons/online-patients.png
 
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 700
-
         - asset: assets/fonts/InterTight-Regular.ttf
         - asset: assets/fonts/InterTight-Bold.ttf
           weight: 700
