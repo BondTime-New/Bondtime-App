@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import '../providers/favorites_provider.dart';
+import '../data/pediatricians.dart';
 
 var logger = Logger();
 
@@ -193,13 +194,14 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                 children: [
                   // Suggested Tab
                   ListView.builder(
-                    itemCount: 5,
+                    itemCount: pediatricians.length, // 🔥 Dynamic Count
                     itemBuilder: (context, index) {
+                      final pediatrician = pediatricians[index];
                       return _buildPediatricianCard(
                         context,
-                        'Prof. Ruwan Danishka',
-                        'Consultant Pediatrician',
-                        'assets/images/doctor.jpg',
+                        pediatrician['name']!,
+                        pediatrician['title']!,
+                        pediatrician['image']!,
                       );
                     },
                   ),
