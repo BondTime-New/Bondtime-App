@@ -153,14 +153,18 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
                       return ListView.builder(
                         itemCount: favorites.length,
                         itemBuilder: (context, index) {
-                          final name = favorites[index];
+                          final favorite = favorites[index];
+                          final name = favorite['name'] ?? 'Unknown';
+                          final imagePath =
+                              favorite['imagePath'] ??
+                              'assets/images/doctor.jpg';
+
                           // 🔥 Use the new PediatricianCard widget with isFavoriteTab set to true
                           return PediatricianCard(
                             name: name,
                             title:
                                 'Consultant Pediatrician', // You can modify this if needed
-                            imagePath:
-                                'assets/images/doctor.jpg', // Same image for all favorites
+                            imagePath: imagePath,
                             isFavoriteTab:
                                 true, // 🔥 This enables the delete button
                           );

@@ -7,9 +7,12 @@ import '../widgets/action_buttons.dart';
 
 // Changed from StatelessWidget to StatefulWidget
 class PediatricianDetailScreen extends StatefulWidget {
-  final String pediatricianName; // 🔥 Added to identify the pediatrician
+  final Map<String, String> pediatricianDetails; // 🔥 Updated to accept details
 
-  const PediatricianDetailScreen({super.key, required this.pediatricianName});
+  const PediatricianDetailScreen({
+    super.key,
+    required this.pediatricianDetails,
+  });
 
   @override
   State<PediatricianDetailScreen> createState() =>
@@ -47,6 +50,12 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Extracting pediatrician details from the Map
+    final String name = widget.pediatricianDetails['name'] ?? 'Unknown';
+    final String title = widget.pediatricianDetails['title'] ?? '';
+    final String imagePath =
+        widget.pediatricianDetails['imagePath'] ?? 'assets/images/doctor.jpg';
+
     return Scaffold(
       backgroundColor: Color(0xFFFEFEFE), // Off-White Background
       // Use this to allow body to go behind the AppBar
@@ -125,11 +134,8 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Profile Picture Section
-            ProfilePictureSection(
-              imagePath: 'assets/images/doctor.jpg',
-              pediatricianName: widget.pediatricianName,
-            ),
+            // 🔥 Profile Picture Section with Dynamic Data
+            ProfilePictureSection(imagePath: imagePath, pediatricianName: name),
 
             // Overlapping Container
             Transform.translate(
@@ -153,38 +159,34 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Name and Title (Aligned to the Left)
+                    // 🔥 Dynamic Name and Title (Aligned to the Left)
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Column(
-                        mainAxisSize:
-                            MainAxisSize
-                                .min, // Compact layout with no extra space
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Prof. Ruwan Danishka',
+                            name,
                             style: TextStyle(
                               fontSize: 20.16,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF212529),
                               fontFamily: 'InterTight',
-                              height: 1.0, // Tighter line height to reduce gap
+                              height: 1.0,
                             ),
                           ),
-                          SizedBox(
-                            height: 4,
-                          ), // Adjust as needed for tighter spacing
+                          SizedBox(height: 4),
                           GestureDetector(
                             onTap: () {},
                             child: Text(
-                              'Consultant Pediatrician - General Hospital',
+                              title,
                               style: TextStyle(
                                 fontSize: 16.15,
                                 fontWeight: FontWeight.w400,
                                 color: Color(0xFF5A87FE),
                                 fontFamily: 'InterTight',
-                                height: 1.0, // Tighter line height
+                                height: 1.0,
                               ),
                             ),
                           ),

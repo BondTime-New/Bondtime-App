@@ -14,6 +14,7 @@ class ProfilePictureSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Debug print to check the image path
     return Container(
       width: double.infinity,
       height: 323,
@@ -114,7 +115,10 @@ class ProfilePictureSection extends StatelessWidget {
                     color: isFavorite ? Colors.red : Colors.grey,
                   ),
                   onPressed: () {
-                    favoritesProvider.toggleFavorite(pediatricianName);
+                    favoritesProvider.toggleFavorite(
+                      pediatricianName,
+                      imagePath,
+                    );
                   },
                 );
               },

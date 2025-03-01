@@ -36,6 +36,7 @@ flutter:
     - assets/icons/tel.svg
 
     - assets/images/doctor.jpg
+    - assets/images/doctor2.jpg
 
   fonts:
     - family: Poppins

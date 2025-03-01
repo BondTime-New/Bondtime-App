@@ -8,7 +8,7 @@ final List<Map<String, String>> pediatricians = [
   {
     'name': 'Dr. Saman Perera',
     'title': 'Child Specialist',
-    'image': 'assets/images/doctor.jpg',
+    'image': 'assets/images/doctor2.jpg',
   },
   {
     'name': 'Dr. Anushka Fernando',

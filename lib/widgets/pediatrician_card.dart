@@ -122,12 +122,18 @@ class PediatricianCard extends StatelessWidget {
                     // 🔥 Reserve Button - Should be in both Suggested and Favorites Tabs
                     ElevatedButton(
                       onPressed: () {
+                        // 🔥 Log the imagePath to check its value
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder:
                                 (context) => PediatricianDetailScreen(
-                                  pediatricianName: name,
+                                  pediatricianDetails: {
+                                    'name': name,
+                                    'title': title,
+                                    'imagePath': imagePath,
+                                  },
                                 ),
                           ),
                         );
@@ -223,7 +229,7 @@ class PediatricianCard extends StatelessWidget {
                         ),
                         child: IconButton(
                           onPressed: () {
-                            favoritesProvider.removeFavorite(name);
+                            favoritesProvider.toggleFavorite(name, imagePath);
                           },
                           icon: Icon(
                             Icons.delete_outline,
