@@ -31,6 +31,13 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    // 🔥 Prevent Search Bar from Auto-Focusing on Resume
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_searchFocusNode.hasFocus) {
+        FocusScope.of(context).unfocus();
+      }
+    });
   }
 
   @override
@@ -58,9 +65,13 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
   Widget build(BuildContext context) {
     // 🔥 Wrapped with GestureDetector to unfocus when tapping outside
     return GestureDetector(
+      behavior: HitTestBehavior.opaque, // ✅ Ensures taps register everywhere
       onTap: () {
-        FocusScope.of(context).unfocus(); // 🔥 Unfocus the search bar
+        if (_searchFocusNode.hasFocus) {
+          _searchFocusNode.unfocus(); // 🔥 Ensure proper unfocus
+        }
       },
+
       child: Scaffold(
         backgroundColor: Color(0xFFFEFEFE),
         // AppBar with BondTime Logo

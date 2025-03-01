@@ -122,22 +122,30 @@ class PediatricianCard extends StatelessWidget {
                     // 🔥 Reserve Button - Should be in both Suggested and Favorites Tabs
                     ElevatedButton(
                       onPressed: () {
-                        // 🔥 Log the imagePath to check its value
-
-                        Navigator.push(
+                        FocusScope.of(
                           context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => PediatricianDetailScreen(
-                                  pediatricianDetails: {
-                                    'name': name,
-                                    'title': title,
-                                    'imagePath': imagePath,
-                                  },
-                                ),
-                          ),
-                        );
+                        ).unfocus(); // 🔥 Ensure search bar loses focus
+
+                        Future.delayed(Duration(milliseconds: 100), () {
+                          if (context.mounted) {
+                            // ✅ Prevent issues if the screen was disposed
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => PediatricianDetailScreen(
+                                      pediatricianDetails: {
+                                        'name': name,
+                                        'title': title,
+                                        'imagePath': imagePath,
+                                      },
+                                    ),
+                              ),
+                            );
+                          }
+                        });
                       },
+
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         foregroundColor: Colors.white,
