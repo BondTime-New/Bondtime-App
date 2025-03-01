@@ -64,7 +64,7 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
       // 🔥 UPDATED: Transparent AppBar with Dynamic Opacity and Elevation
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(
-          100,
+          80, // Use 155 to cover almost the full height of the profile pic
         ), // Custom Height for Floating Effect
         child: Container(
           color: Colors.white.withAlpha(

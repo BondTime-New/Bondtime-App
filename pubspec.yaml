@@ -37,6 +37,9 @@ flutter:
 
     - assets/images/doctor.jpg
     - assets/images/doctor2.jpg
+    - assets/images/doctor3.jpg
+    - assets/images/doctor4.jpg
+    - assets/images/doctor5.jpg
 
   fonts:
     - family: Poppins
