@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class GrowthChart extends StatelessWidget {
-  const GrowthChart({Key? key}) : super(key: key);
+  const GrowthChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class GrowthChart extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 10,
@@ -92,7 +92,7 @@ class GrowthChart extends StatelessWidget {
                 isCurved: true,
                 color: Colors.blue,
                 barWidth: 3,
-                dotData: FlDotData(show: false),
+                dotData: const FlDotData(show: false),
                 belowBarData: BarAreaData(
                   show: true,
                   gradient: LinearGradient(

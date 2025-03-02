@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bondtime_app/screens/profile/edit_profile_screen.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({Key? key}) : super(key: key);
+  const ProfileHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class ProfileHeader extends StatelessWidget {
           const SizedBox(width: 20),
 
           // Name and Age
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
                   "Juan Jr.",
                   style: TextStyle(

@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({super.key});
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
@@ -78,10 +78,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   right: 0,
                   child: GestureDetector(
                     onTap: _pickImage,
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.blueAccent,
-                      child: const Icon(Icons.edit, color: Colors.white),
+                      child: Icon(Icons.edit, color: Colors.white),
                     ),
                   ),
                 ),

@@ -4,7 +4,7 @@ import 'package:bondtime_app/screens/profile/widgets/skill_card.dart';
 import 'package:bondtime_app/screens/profile/widgets/dynamic_growth_chart.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -43,9 +43,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 1.5, // Stroke Width
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Weight",
                               style: TextStyle(
@@ -79,9 +79,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: 1.5, // Stroke Width
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "Height",
                               style: TextStyle(
@@ -109,12 +109,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 20),
 
               // Skill Cards with Strokes
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
                     Row(
-                      children: const [
+                      children: [
                         Expanded(
                           child: SkillCard(
                             skillName: "Fine Motor Skills",
@@ -132,9 +132,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Row(
-                      children: const [
+                      children: [
                         Expanded(
                           child: SkillCard(
                             skillName: "Sensory Development",

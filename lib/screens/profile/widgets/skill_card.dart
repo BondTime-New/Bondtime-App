@@ -6,11 +6,11 @@ class SkillCard extends StatelessWidget {
   final Color backgroundColor;
 
   const SkillCard({
-    Key? key,
+    super.key,
     required this.skillName,
     required this.score,
     required this.backgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class SkillCard extends StatelessWidget {
           color: Colors.grey.shade300,
           width: 1.0,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 5,

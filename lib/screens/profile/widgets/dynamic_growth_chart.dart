@@ -5,9 +5,9 @@ class DynamicGrowthChart extends StatefulWidget {
   final List<double> weightData; // Accepts weight data
 
   const DynamicGrowthChart({
-    Key? key,
+    super.key,
     required this.weightData,
-  }) : super(key: key);
+  });
 
   @override
   _DynamicGrowthChartState createState() => _DynamicGrowthChartState();
@@ -22,7 +22,7 @@ class _DynamicGrowthChartState extends State<DynamicGrowthChart> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 10,
@@ -94,7 +94,7 @@ class _DynamicGrowthChartState extends State<DynamicGrowthChart> {
                 color: Colors.blue,
                 barWidth: 3,
                 isStrokeCapRound: true,
-                dotData: FlDotData(show: true),
+                dotData: const FlDotData(show: true),
                 belowBarData: BarAreaData(
                   show: true,
                   gradient: LinearGradient(

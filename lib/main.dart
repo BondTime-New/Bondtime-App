@@ -1,38 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:bondtime_app/screens/profile/profile_screen.dart';
+import 'screens/onboarding_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BondTime App',
       theme: ThemeData(
+        fontFamily: 'InterTight', // Set the custom font family here
         primarySwatch: Colors.blue,
-        fontFamily: 'InterTight', // Applying InterTight globally
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(
-            fontFamily: 'InterTight',
-          ),
-          bodyLarge: TextStyle(
-            fontFamily: 'InterTight',
-          ),
-          bodySmall: TextStyle(
-            fontFamily: 'InterTight',
-          ),
-          headlineMedium: TextStyle(
-            fontFamily: 'InterTight',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const ProfileScreen(),
+      home: OnboardingScreen(), // Your OnboardingScreen
     );
   }
 }
