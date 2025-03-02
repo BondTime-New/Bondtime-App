@@ -87,6 +87,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (_isFormValid) {
       print("Form is valid!");
+
+      // Add Navigation to Baby Registration Screen
+      Navigator.pushNamed(context, '/baby-registration');
     }
   }
 
