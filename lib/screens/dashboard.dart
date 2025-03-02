@@ -38,6 +38,39 @@ class DashboardScreen extends StatelessWidget {
               onPressed: () {},
             ),
           ),
+
+          // Streaks Icon with Number
+          Container(
+            constraints: BoxConstraints(
+              minWidth: 46,   // Minimum width
+              minHeight: 28,  // Fixed height
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Color(0xFFFED7D7),  // Light red background
+              borderRadius: BorderRadius.circular(20), // Full radius for circular shape
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,  // Make width responsive to content
+              children: [
+                Text(
+                  "44", // Streak count
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 4),
+                SvgPicture.asset(
+                  'assets/icons/streaks_icon.svg',
+                  height: 18,
+                  width: 18,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 16), // Space between icons
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
