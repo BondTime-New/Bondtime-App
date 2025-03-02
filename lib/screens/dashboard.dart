@@ -8,17 +8,38 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final PageController _pageController = PageController(initialPage: 1);
+  int currentPage = 1;
+
   final List<String> days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
   final List<String> dates = ["19", "20", "21", "1/3", "22", "23", "24"];
   final List<bool> completedDays = [true, true, true, false, false, false, false];
-  int selectedIndex = 3; // Default selected day (Thursday)
-  int rewardStars = 10; // Number of earned reward stars
+  int selectedIndex = 3;
+  int rewardStars = 10;
 
   void selectDay(int index) {
     setState(() {
       selectedIndex = index;
     });
   }
+
+  final List<Map<String, String>> activities = [
+    {
+      "day": "Day 3",
+      "description": "Read a bedtime story to your child before sleep.",
+      "icon": "assets/icons/activity1.svg",
+    },
+    {
+      "day": "Day 4",
+      "description": "Spend 10 minutes engaging with your child playing with building blocks.",
+      "icon": "assets/icons/activity1.svg",
+    },
+    {
+      "day": "Day 5",
+      "description": "Encourage your child to draw something they love.",
+      "icon": "assets/icons/activity1.svg",
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +54,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           height: 18,
         ),
         actions: [
-          IconButton(
-            icon: SvgPicture.asset(
-              'assets/icons/notifications.svg',
-              height: 24,
-              width: 24,
-              color: Colors.black,
-            ),
-            onPressed: () {},
-          ),
-          SizedBox(width: 0),
           IconButton(
             icon: SvgPicture.asset(
               'assets/icons/settings.svg',
@@ -101,7 +112,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 5),
 
-              // Selectable Dates Section
+              // **Date Selector**
               Container(
                 margin: EdgeInsets.only(top: 20),
                 child: Row(
@@ -187,18 +198,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               SizedBox(height: 16),
 
-              // Daily Progress Title
-              Text(
-                "Daily Progress",
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-
-              // Progress Bar + Reward Star (Aligned)
+              // **Daily Progress Bar + Stars**
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Progress Bar (Unchanged)
                   Expanded(
                     child: Container(
                       height: 9.5,
@@ -209,7 +212,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: Stack(
                         children: [
                           Container(
-                            width: 316 * 0.5, // **No changes to width**
+                            width: 316 * 0.5,
                             height: 9.5,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
@@ -220,59 +223,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8), // Space between progress bar and stars
-
-                  // Reward Star Count (⭐ 10)
-                  Row(
-                    children: [
-                      Text(
-                        "$rewardStars", // Dynamic star count
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFFA500), // Orange star color
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      SvgPicture.asset(
-                        "assets/icons/star_icon.svg", // Star icon
-                        height: 16,
-                        width: 16,
-                        color: Color(0xFFFFA500), // Orange star color
-                      ),
-                    ],
+                  SizedBox(width: 8),
+                  Text(
+                    "$rewardStars",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFFA500),
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  SvgPicture.asset(
+                    "assets/icons/star_icon.svg",
+                    height: 16,
+                    width: 16,
+                    color: Color(0xFFFFA500),
                   ),
                 ],
               ),
 
-              SizedBox(height: 16),
+              SizedBox(height: 24),
 
-              // Activity Card (Blue Card)
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.blue[100],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Day 4",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Text(
-                        "Spend 10 minutes engaging with your child playing with building blocks"),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.play_circle, size: 40),
-                        SvgPicture.asset("assets/icons/notifications.svg",
-                            width: 80),
-                      ],
-                    ),
-                  ],
+              // **Slidable Activity Cards**
+              SizedBox(
+                height: 175,
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: activities.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 380,
+                      height: 175,
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFDCE6FF),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Color(0xFF5283FF), width: 1),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(top: 5, left: 16, child: Text(activities[index]["day"]!, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
+                          Positioned(top: 35, left: 16, child: SizedBox(width: 200, child: Text(activities[index]["description"]!, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)))),
+                          Positioned(bottom: 17, left: 20, child: SvgPicture.asset("assets/icons/playicon.svg", width: 50, height: 50)),
+                          Positioned(bottom: 10, right: 14, child: SvgPicture.asset(activities[index]["icon"]!, width: 98, height: 131)),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
