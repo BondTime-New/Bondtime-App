@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/bottom_navbar.dart';
+import '../widgets/activity_card.dart';
+import '../widgets/date_selector.dart';
+import '../widgets/progress_bar.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -54,6 +57,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
           height: 18,
         ),
         actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/notifications.svg', // Restored notification icon
+              height: 24,
+              width: 24,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
+          SizedBox(width: 8),
           IconButton(
             icon: SvgPicture.asset(
               'assets/icons/settings.svg',
@@ -112,137 +125,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               SizedBox(height: 5),
 
-              // **Date Selector**
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: List.generate(days.length, (index) {
-                    return GestureDetector(
-                      onTap: () => selectDay(index),
-                      child: Column(
-                        children: [
-                          if (index != selectedIndex)
-                            Column(
-                              children: [
-                                Text(
-                                  days[index],
-                                  style: TextStyle(
-                                    color: index < selectedIndex
-                                        ? Color(0xFF111111)
-                                        : Color(0xFFC1C1C1),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                if (completedDays[index])
-                                  SvgPicture.asset(
-                                    "assets/icons/tick.svg",
-                                    width: 9,
-                                    height: 7.07,
-                                  )
-                                else
-                                  Text(
-                                    dates[index],
-                                    style: TextStyle(
-                                      color: Color(0xFF111111),
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          if (index == selectedIndex)
-                            Container(
-                              width: 33,
-                              height: 51,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(
-                                    color: Color(0xFF111111), width: 0.25),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    days[index],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF111111),
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  if (completedDays[index])
-                                    SvgPicture.asset(
-                                      "assets/icons/tick.svg",
-                                      width: 9,
-                                      height: 7.07,
-                                    )
-                                  else
-                                    Text(
-                                      "0/3",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xFF111111),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
+              // **Date Selector Widget**
+              DateSelector(
+                days: days,
+                dates: dates,
+                completedDays: completedDays,
+                selectedIndex: selectedIndex,
+                onSelectDay: selectDay,
               ),
 
               SizedBox(height: 16),
 
-              // **Daily Progress Bar + Stars**
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 9.5,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.grey[300],
-                      ),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 316 * 0.5,
-                            height: 9.5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    "$rewardStars",
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFA500),
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  SvgPicture.asset(
-                    "assets/icons/star_icon.svg",
-                    height: 16,
-                    width: 16,
-                    color: Color(0xFFFFA500),
-                  ),
-                ],
-              ),
+              // **Progress Bar Widget**
+              ProgressBar(rewardStars: rewardStars),
 
-              SizedBox(height: 24),
+              SizedBox(height: 16),
 
               // **Slidable Activity Cards**
               SizedBox(
@@ -256,23 +153,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     });
                   },
                   itemBuilder: (context, index) {
-                    return Container(
-                      width: 380,
-                      height: 175,
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFDCE6FF),
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: Color(0xFF5283FF), width: 1),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(top: 5, left: 16, child: Text(activities[index]["day"]!, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))),
-                          Positioned(top: 35, left: 16, child: SizedBox(width: 200, child: Text(activities[index]["description"]!, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)))),
-                          Positioned(bottom: 17, left: 20, child: SvgPicture.asset("assets/icons/playicon.svg", width: 50, height: 50)),
-                          Positioned(bottom: 10, right: 14, child: SvgPicture.asset(activities[index]["icon"]!, width: 98, height: 131)),
-                        ],
-                      ),
+                    return ActivityCard(
+                      day: activities[index]["day"]!,
+                      description: activities[index]["description"]!,
+                      icon: activities[index]["icon"]!,
+                      currentPage: currentPage,
+                      index: index,
+                      totalPages: activities.length,
                     );
                   },
                 ),
