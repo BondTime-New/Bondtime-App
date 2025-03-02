@@ -7,7 +7,39 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFDFDFD), // Set background color to #FDFDFD
+      backgroundColor: Color(0xFFFDFDFD),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leadingWidth: 30, // Reduced padding between back arrow and logo
+        title: SvgPicture.asset(
+          'assets/icons/BondTime_logo.svg', // Path to your SVG logo
+          height: 18, // Match Figma design
+        ),
+        actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/notifications.svg',
+              height: 24,
+              width: 24,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: SvgPicture.asset(
+                'assets/icons/settings.svg',
+                height: 24,
+                width: 24,
+                color: Colors.black,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavBar(),
       body: SafeArea(
         child: Padding(
@@ -15,17 +47,6 @@ class DashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // App Title
-              Text(
-                "BondTime",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'InterTight',
-                ),
-              ),
-              SizedBox(height: 8),
-
               // Greeting
               Text(
                 "Good Evening, Juan",
