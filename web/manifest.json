@@ -1,6 +1,6 @@
 {
-    "name": "bondtime_activity",
-    "short_name": "bondtime_activity",
+    "name": "bondtime_dashboard",
+    "short_name": "bondtime_dashboard",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

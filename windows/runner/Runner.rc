@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "bondtime_activity" "\0"
+            VALUE "FileDescription", "bondtime_dashboard" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "bondtime_activity" "\0"
+            VALUE "InternalName", "bondtime_dashboard" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "bondtime_activity.exe" "\0"
-            VALUE "ProductName", "bondtime_activity" "\0"
+            VALUE "OriginalFilename", "bondtime_dashboard.exe" "\0"
+            VALUE "ProductName", "bondtime_dashboard" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

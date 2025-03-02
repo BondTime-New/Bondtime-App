@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:bondtime_activity/screens/activity_screen.dart';
+import 'screens/dashboard.dart';
 
 void main() {
-  runApp(BondTimeApp());
+  runApp(MyApp());
 }
 
-class BondTimeApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'InterTight',
-      ),
-      home: ActivityScreen(),
+      theme: ThemeData(fontFamily: 'InterTight'),
+      home: DashboardScreen(),
     );
   }
 }

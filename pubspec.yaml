@@ -1,49 +1,32 @@
-name: bondtime_activity
-description: A new Flutter project for BondTime's Activity Screen.
-
-publish_to: 'none' 
+name: bondtime_dashboard
+description: "A new Flutter project."
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ^3.5.1
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^2.0.7
-  flutter_tts: ^3.5.0
 
-  cupertino_icons: ^1.0.2
+  # UI dependencies
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.10  # For SVG support
+  fl_chart: ^0.63.0     # For bar chart graph
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/engagement.svg
-    - assets/icons/voice_assistance.svg
-    - assets/icons/play.svg
-    - assets/icons/pause.svg
-    - assets/icons/replay.svg
-    - assets/icons/next.svg
-    - assets/icons/previous.svg
-    - assets/icons/bondtime_logo.svg
-    - assets/icons/notifications.svg
-    - assets/icons/settings.svg
-    - assets/icons/dashboard.svg
-    - assets/icons/dashboard_selected.svg
-    - assets/icons/bondy.svg
-    - assets/icons/bondy_selected.svg
-    - assets/icons/activities.svg
-    - assets/icons/activities_selected.svg
-    - assets/icons/pediatricians.svg
-    - assets/icons/pediatricians_selected.svg
-    - assets/icons/profile.svg
-    - assets/icons/profile_selected.svg
+    - assets/icons/  # SVG icons (menu & activities)
+    - assets/fonts/  # Custom fonts
 
   fonts:
     - family: InterTight
