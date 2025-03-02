@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fl_chart/fl_chart.dart';
 import '../widgets/bottom_navbar.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  final List<String> days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+  final List<String> dates = ["19", "20", "21", "1/3", "22", "23", "24"];
+  final List<bool> completedDays = [true, true, true, false, false, false, false];
+  int selectedIndex = 3; // Default selected day (Thursday)
+  int rewardStars = 10; // Number of earned reward stars
+
+  void selectDay(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,10 +27,10 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leadingWidth: 30, // Reduced padding between back arrow and logo
+        leadingWidth: 30,
         title: SvgPicture.asset(
-          'assets/icons/BondTime_logo.svg', // Path to your SVG logo
-          height: 18, // Match Figma design
+          'assets/icons/BondTime_logo.svg',
+          height: 18,
         ),
         actions: [
           IconButton(
@@ -26,96 +42,212 @@ class DashboardScreen extends StatelessWidget {
             ),
             onPressed: () {},
           ),
+          SizedBox(width: 0),
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icons/settings.svg',
+              height: 24,
+              width: 24,
+              color: Colors.black,
+            ),
+            onPressed: () {},
+          ),
+          SizedBox(width: 3),
           Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              icon: SvgPicture.asset(
-                'assets/icons/settings.svg',
-                height: 24,
-                width: 24,
-                color: Colors.black,
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Container(
+              constraints: BoxConstraints(minWidth: 46, minHeight: 28),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Color(0xFFFED7D7),
+                borderRadius: BorderRadius.circular(20),
               ),
-              onPressed: () {},
-            ),
-          ),
-
-          // Streaks Icon with Number
-          Container(
-            constraints: BoxConstraints(
-              minWidth: 46,   // Minimum width
-              minHeight: 28,  // Fixed height
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Color(0xFFFED7D7),  // Light red background
-              borderRadius: BorderRadius.circular(20), // Full radius for circular shape
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,  // Make width responsive to content
-              children: [
-                Text(
-                  "44", // Streak count
-                  style: TextStyle(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("44",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  SizedBox(width: 4),
+                  SvgPicture.asset(
+                    'assets/icons/streaks_icon.svg',
+                    height: 18,
+                    width: 18,
                     color: Colors.red,
-                    fontWeight: FontWeight.bold,
                   ),
-                ),
-                SizedBox(width: 4),
-                SvgPicture.asset(
-                  'assets/icons/streaks_icon.svg',
-                  height: 18,
-                  width: 18,
-                  color: Colors.red,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          SizedBox(width: 16), // Space between icons
         ],
       ),
       bottomNavigationBar: BottomNavBar(),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Greeting
+              SizedBox(height: 8),
               Text(
                 "Good Evening, Juan",
-                style: TextStyle(fontSize: 18, fontFamily: 'InterTight'),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'InterTight',
+                ),
+              ),
+              SizedBox(height: 5),
+
+              // Selectable Dates Section
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(days.length, (index) {
+                    return GestureDetector(
+                      onTap: () => selectDay(index),
+                      child: Column(
+                        children: [
+                          if (index != selectedIndex)
+                            Column(
+                              children: [
+                                Text(
+                                  days[index],
+                                  style: TextStyle(
+                                    color: index < selectedIndex
+                                        ? Color(0xFF111111)
+                                        : Color(0xFFC1C1C1),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                if (completedDays[index])
+                                  SvgPicture.asset(
+                                    "assets/icons/tick.svg",
+                                    width: 9,
+                                    height: 7.07,
+                                  )
+                                else
+                                  Text(
+                                    dates[index],
+                                    style: TextStyle(
+                                      color: Color(0xFF111111),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          if (index == selectedIndex)
+                            Container(
+                              width: 33,
+                              height: 51,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                border: Border.all(
+                                    color: Color(0xFF111111), width: 0.25),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    days[index],
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF111111),
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  if (completedDays[index])
+                                    SvgPicture.asset(
+                                      "assets/icons/tick.svg",
+                                      width: 9,
+                                      height: 7.07,
+                                    )
+                                  else
+                                    Text(
+                                      "0/3",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color(0xFF111111),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
               ),
 
               SizedBox(height: 16),
 
-              // Progress Bar
-              Text("Daily Progress", style: TextStyle(fontSize: 16)),
+              // Daily Progress Title
+              Text(
+                "Daily Progress",
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 8),
-              Container(
-                margin: EdgeInsets.only(left: 32),
-                width: 316,
-                height: 9.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey[300],
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 316 * 0.5,
+
+              // Progress Bar + Reward Star (Aligned)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Progress Bar (Unchanged)
+                  Expanded(
+                    child: Container(
                       height: 9.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: Colors.blue,
+                        color: Colors.grey[300],
+                      ),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 316 * 0.5, // **No changes to width**
+                            height: 9.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 8), // Space between progress bar and stars
+
+                  // Reward Star Count (⭐ 10)
+                  Row(
+                    children: [
+                      Text(
+                        "$rewardStars", // Dynamic star count
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFFA500), // Orange star color
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      SvgPicture.asset(
+                        "assets/icons/star_icon.svg", // Star icon
+                        height: 16,
+                        width: 16,
+                        color: Color(0xFFFFA500), // Orange star color
+                      ),
+                    ],
+                  ),
+                ],
               ),
 
               SizedBox(height: 16),
 
-              // Activity Card (with SVG)
+              // Activity Card (Blue Card)
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -125,83 +257,22 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Day 4", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text("Day 4",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                     SizedBox(height: 8),
-                    Text("Spend 10 minutes engaging with your child playing with building blocks"),
+                    Text(
+                        "Spend 10 minutes engaging with your child playing with building blocks"),
                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Icon(Icons.play_circle, size: 40),
-                        SvgPicture.asset("assets/icons/notifications.svg", width: 80),
+                        SvgPicture.asset("assets/icons/notifications.svg",
+                            width: 80),
                       ],
                     ),
                   ],
-                ),
-              ),
-
-              SizedBox(height: 16),
-
-              // Tips for Mom Card
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.pink[100],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Daily tips for mama", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Text("Drink 12 cups of water (3 litres)"),
-                    SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Done!"),
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 16),
-
-              // Coded Graph (Child Engagement Screen Time)
-              Container(
-                height: 180,
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: BarChart(
-                  BarChartData(
-                    titlesData: FlTitlesData(
-                      leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 30)),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-                            return Text(days[value.toInt()]);
-                          },
-                        ),
-                      ),
-                      rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    ),
-                    barGroups: [
-                      BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 1.2, color: Colors.grey)]),
-                      BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 0.8, color: Colors.grey)]),
-                      BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 1.5, color: Colors.black)]),
-                      BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 0.9, color: Colors.grey)]),
-                      BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 1.0, color: Colors.grey)]),
-                      BarChartGroupData(x: 5, barRods: [BarChartRodData(toY: 1.8, color: Colors.grey)]),
-                      BarChartGroupData(x: 6, barRods: [BarChartRodData(toY: 0.5, color: Colors.grey)]),
-                    ],
-                    borderData: FlBorderData(show: false),
-                    gridData: FlGridData(show: false),
-                  ),
                 ),
               ),
             ],
