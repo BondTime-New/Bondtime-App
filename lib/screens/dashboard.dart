@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/activity_card.dart';
+import '../widgets/tips_card.dart';
 import '../widgets/date_selector.dart';
 import '../widgets/progress_bar.dart';
 
@@ -12,7 +13,10 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final PageController _pageController = PageController(initialPage: 1);
+  final PageController _tipsPageController = PageController(initialPage: 0);
+
   int currentPage = 1;
+  int currentTipPage = 0;
 
   final List<String> days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
   final List<String> dates = ["19", "20", "21", "1/3", "22", "23", "24"];
@@ -43,9 +47,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
       "icon": "assets/icons/activity1.svg",
     },
     {
-      "day": "Day 4", // ✅ Added new card
+      "day": "Day 4",
       "description": "Take a short walk outside with your child for fresh air.",
       "icon": "assets/icons/activity1.svg",
+    },
+  ];
+
+  final List<Map<String, String>> tips = [
+    {
+      "title": "Daily tips for mama",
+      "description": "Drink 12 cups of water (3 litres) to stay hydrated throughout the day.",
+      "buttonText": "Done!",
+      "icon": "assets/icons/tips1.svg",
+    },
+    {
+      "title": "Healthy Habits",
+      "description": "Take 10 minutes to do deep breathing exercises to relax.",
+      "buttonText": "Got it!",
+      "icon": "assets/icons/tips1.svg",
     },
   ];
 
@@ -151,7 +170,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 175,
                 child: PageView.builder(
                   controller: _pageController,
-                  itemCount: activities.length, // ✅ Now includes 4 cards
+                  itemCount: activities.length,
                   onPageChanged: (index) {
                     setState(() {
                       currentPage = index;
@@ -165,6 +184,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       currentPage: currentPage,
                       index: index,
                       totalPages: activities.length,
+                    );
+                  },
+                ),
+              ),
+
+              SizedBox(height: 16),
+
+              // **Slidable Tips Cards**
+              SizedBox(
+                height: 175,
+                child: PageView.builder(
+                  controller: _tipsPageController,
+                  itemCount: tips.length,
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentTipPage = index;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return TipsCard(
+                      title: tips[index]["title"]!,
+                      description: tips[index]["description"]!,
+                      buttonText: tips[index]["buttonText"]!,
+                      icon: tips[index]["icon"]!,
+                      currentPage: currentTipPage,
+                      index: index,
+                      totalPages: tips.length,
                     );
                   },
                 ),
