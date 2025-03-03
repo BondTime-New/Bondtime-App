@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.10  # For SVG support
   fl_chart: ^0.63.0     # For bar chart graph
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
