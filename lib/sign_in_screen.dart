@@ -118,7 +118,10 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: 10),
             Center(
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                      context, '/otp-verification'); // ✅ Navigate to OTP screen
+                },
                 style: ButtonStyle(
                   foregroundColor:
                       MaterialStateProperty.all(const Color(0xFF676767)),
