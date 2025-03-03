@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/activity_card.dart';
-import '../widgets/tips_card.dart';
-import '../widgets/date_selector.dart';
 import '../widgets/progress_bar.dart';
+import '../widgets/daily_time_chart.dart';
+import '../widgets/tips_card.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -14,21 +14,11 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final PageController _pageController = PageController(initialPage: 1);
   final PageController _tipsPageController = PageController(initialPage: 0);
-
   int currentPage = 1;
-  int currentTipPage = 0;
+  int tipsCurrentPage = 0;
+  int selectedDayIndex = 3; // ✅ Default selected day for time chart
 
-  final List<String> days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-  final List<String> dates = ["19", "20", "21", "1/3", "22", "23", "24"];
-  final List<bool> completedDays = [true, true, true, false, false, false, false];
-  int selectedIndex = 3;
   int rewardStars = 10;
-
-  void selectDay(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
 
   final List<Map<String, String>> activities = [
     {
@@ -56,17 +46,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Map<String, String>> tips = [
     {
       "title": "Daily tips for mama",
-      "description": "Drink 12 cups of water (3 litres) to stay hydrated throughout the day.",
+      "description": "Drink 12 cups of water (3 litres)",
       "buttonText": "Done!",
       "icon": "assets/icons/tips1.svg",
     },
     {
-      "title": "Healthy Habits",
-      "description": "Take 10 minutes to do deep breathing exercises to relax.",
+      "title": "Daily tips for mama",
+      "description": "Take deep breaths and relax",
       "buttonText": "Got it!",
-      "icon": "assets/icons/tips1.svg",
+      "icon": "assets/icons/tips2.svg",
     },
   ];
+
+  final List<double> timeSpent = [1.5, 1.0, 1.7, 1.2, 0.8, 1.9, 0.5]; // Hours spent per day
+
+  // ✅ Updates the selected day when a bar in the chart is tapped
+  void updateSelectedDay(int index) {
+    setState(() {
+      selectedDayIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,89 +132,92 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       bottomNavigationBar: BottomNavBar(),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8),
-              Text(
-                "Good Evening, Juan",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'InterTight',
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 0),
+
+                Text(
+                  "Good Evening, Juan",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'InterTight',
+                  ),
                 ),
-              ),
-              SizedBox(height: 5),
+                SizedBox(height: 16),
 
-              // **Date Selector Widget**
-              DateSelector(
-                days: days,
-                dates: dates,
-                completedDays: completedDays,
-                selectedIndex: selectedIndex,
-                onSelectDay: selectDay,
-              ),
+                // **Progress Bar Widget**
+                ProgressBar(rewardStars: rewardStars),
 
-              SizedBox(height: 16),
+                SizedBox(height: 20),
 
-              // **Progress Bar Widget**
-              ProgressBar(rewardStars: rewardStars),
-
-              SizedBox(height: 16),
-
-              // **Slidable Activity Cards**
-              SizedBox(
-                height: 175,
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: activities.length,
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentPage = index;
-                    });
-                  },
-                  itemBuilder: (context, index) {
-                    return ActivityCard(
-                      day: activities[index]["day"]!,
-                      description: activities[index]["description"]!,
-                      icon: activities[index]["icon"]!,
-                      currentPage: currentPage,
-                      index: index,
-                      totalPages: activities.length,
-                    );
-                  },
+                // **Slidable Activity Cards**
+                SizedBox(
+                  height: 175,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: activities.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentPage = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      return ActivityCard(
+                        day: activities[index]["day"]!,
+                        description: activities[index]["description"]!,
+                        icon: activities[index]["icon"]!,
+                        currentPage: currentPage,
+                        index: index,
+                        totalPages: activities.length,
+                      );
+                    },
+                  ),
                 ),
-              ),
 
-              SizedBox(height: 16),
+                SizedBox(height: 20),
 
-              // **Slidable Tips Cards**
-              SizedBox(
-                height: 175,
-                child: PageView.builder(
-                  controller: _tipsPageController,
-                  itemCount: tips.length,
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentTipPage = index;
-                    });
-                  },
-                  itemBuilder: (context, index) {
-                    return TipsCard(
-                      title: tips[index]["title"]!,
-                      description: tips[index]["description"]!,
-                      buttonText: tips[index]["buttonText"]!,
-                      icon: tips[index]["icon"]!,
-                      currentPage: currentTipPage,
-                      index: index,
-                      totalPages: tips.length,
-                    );
-                  },
+                // **Slidable Daily Tips Card**
+                SizedBox(
+                  height: 175,
+                  child: PageView.builder(
+                    controller: _tipsPageController,
+                    itemCount: tips.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        tipsCurrentPage = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      return TipsCard(
+                        title: tips[index]["title"]!,
+                        description: tips[index]["description"]!,
+                        buttonText: tips[index]["buttonText"]!,
+                        icon: tips[index]["icon"]!,
+                        currentPage: tipsCurrentPage,
+                        index: index,
+                        totalPages: tips.length,
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+
+                SizedBox(height: 20),
+
+                // **Daily Time Chart**
+                DailyTimeChart(
+                  timeSpent: timeSpent,
+                  selectedDayIndex: selectedDayIndex, // ✅ Controlled by tapping bars
+                  onDaySelected: updateSelectedDay, // ✅ Handles bar taps
+                ),
+
+                SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),
