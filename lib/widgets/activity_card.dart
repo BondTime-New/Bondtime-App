@@ -18,20 +18,31 @@ class ActivityCard extends StatelessWidget {
     required this.totalPages,
   });
 
+  // Colors for each card
+  final List<Map<String, Color>> cardColors = [
+    {"fill": Color(0xFFDCE6FF), "stroke": Color(0xFF5283FF)}, // Blue
+    {"fill": Color(0xFFE9FFEB), "stroke": Color(0xFF60D46B)}, // Green 
+    {"fill": Color(0xFFFFF2CF), "stroke": Color(0xFFF6CE61)}, // Yellow
+    {"fill": Color(0xFFFFEAEA), "stroke": Color(0xFFEB9595)}, // Red
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final fillColor = cardColors[index]["fill"] ?? Color(0xFFDCE6FF);
+    final strokeColor = cardColors[index]["stroke"] ?? Color(0xFF5283FF);
+
     return Container(
       width: 380,
       height: 175,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Color(0xFFDCE6FF),
+        color: fillColor, // Dynamic Fill Color
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Color(0xFF5283FF), width: 1),
+        border: Border.all(color: strokeColor, width: 1), // Dynamic Stroke Color
       ),
       child: Stack(
         children: [
-          // Day Title (Fixed Position)
+          // Day Title
           Positioned(
             top: 0,
             left: 0,
@@ -41,16 +52,16 @@ class ActivityCard extends StatelessWidget {
             ),
           ),
 
-          // Description (Constrained Width)
+          // Description with max width
           Positioned(
             top: 30,
             left: 0,
             child: SizedBox(
-              width: 250, // ✅ Set max width for description
+              width: 250,
               child: Text(
                 description,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                softWrap: true, // Allow text wrapping
+                softWrap: true,
               ),
             ),
           ),
@@ -77,7 +88,7 @@ class ActivityCard extends StatelessWidget {
             ),
           ),
 
-          // Page Indicators (Bottom Center)
+          // Page Indicators
           Positioned(
             bottom: 10,
             left: 0,

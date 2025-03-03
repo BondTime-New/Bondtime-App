@@ -28,18 +28,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Map<String, String>> activities = [
     {
-      "day": "Day 3",
+      "day": "Day 4",
       "description": "Read a bedtime story to your child before sleep.",
       "icon": "assets/icons/activity1.svg",
     },
     {
       "day": "Day 4",
-      "description": "Spend 10 minutes engaging with your child playing with building blocks.",
+      "description": "10 minutes engaging with your child playing with building blocks.",
       "icon": "assets/icons/activity1.svg",
     },
     {
-      "day": "Day 5",
+      "day": "Day 4",
       "description": "Encourage your child to draw something they love.",
+      "icon": "assets/icons/activity1.svg",
+    },
+    {
+      "day": "Day 4", // ✅ Added new card
+      "description": "Take a short walk outside with your child for fresh air.",
       "icon": "assets/icons/activity1.svg",
     },
   ];
@@ -59,7 +64,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           IconButton(
             icon: SvgPicture.asset(
-              'assets/icons/notifications.svg', // Restored notification icon
+              'assets/icons/notifications.svg',
               height: 24,
               width: 24,
               color: Colors.black,
@@ -146,7 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 175,
                 child: PageView.builder(
                   controller: _pageController,
-                  itemCount: activities.length,
+                  itemCount: activities.length, // ✅ Now includes 4 cards
                   onPageChanged: (index) {
                     setState(() {
                       currentPage = index;
