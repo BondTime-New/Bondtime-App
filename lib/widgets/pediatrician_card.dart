@@ -65,8 +65,8 @@ class PediatricianCard extends StatelessWidget {
                           Text(
                             name,
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 20.16,
+                              fontWeight: FontWeight.w500,
                               color: Color(0xFF212529),
                               fontFamily: 'InterTight',
                             ),
@@ -76,7 +76,8 @@ class PediatricianCard extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.grey,
                               fontFamily: 'InterTight',
-                              fontSize: 14,
+                              fontSize: 16.15,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           SizedBox(height: 6),
@@ -162,7 +163,7 @@ class PediatricianCard extends StatelessWidget {
                       child: Text(
                         'Reserve',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16.15,
                           fontWeight: FontWeight.w600,
                           fontFamily: 'InterTight',
                         ),
@@ -225,26 +226,25 @@ class PediatricianCard extends StatelessWidget {
                       ),
                     ),
 
-                    // 🔥 Delete Button - Only in Favorites Tab
-                    if (isFavoriteTab) SizedBox(width: 43.8),
+                    // ✅ Add this gap before the Heart button
                     if (isFavoriteTab)
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.red),
+                      SizedBox(width: 34), // Adjust width as needed
+                    // 🔥 Heart Button - Only in Favorites Tab
+                    if (isFavoriteTab)
+                      IconButton(
+                        icon: Icon(
+                          favoritesProvider.isFavorite(name)
+                              ? Icons.favorite
+                              : Icons.favorite_border, // Toggle Icon
+                          color:
+                              favoritesProvider.isFavorite(name)
+                                  ? Colors.red
+                                  : Colors.grey,
+                          size: 24,
                         ),
-                        child: IconButton(
-                          onPressed: () {
-                            favoritesProvider.toggleFavorite(name, imagePath);
-                          },
-                          icon: Icon(
-                            Icons.delete_outline,
-                            color: Colors.red,
-                            size: 20,
-                          ),
-                        ),
+                        onPressed: () {
+                          favoritesProvider.toggleFavorite(name, imagePath);
+                        },
                       ),
                   ],
                 ),

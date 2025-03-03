@@ -42,8 +42,13 @@ flutter:
     - assets/images/doctor5.jpg
 
   fonts:
-    - family: Poppins
+    - family: InterTight
       fonts:
         - asset: assets/fonts/InterTight-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/InterTight-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/InterTight-SemiBold.ttf
+          weight: 600
         - asset: assets/fonts/InterTight-Bold.ttf
           weight: 700
