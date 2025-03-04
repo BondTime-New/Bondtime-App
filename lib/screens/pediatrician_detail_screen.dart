@@ -253,7 +253,10 @@ class _PediatricianDetailScreenState extends State<PediatricianDetailScreen> {
       ),
 
       // Bottom Navigation Bar (Fixed at the Bottom)
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 3),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: 3,
+        onItemTapped: (index) {}, // ✅ Renamed from `int` to `index`
+      ),
     );
   }
 }

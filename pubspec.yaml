@@ -34,6 +34,16 @@ flutter:
     - assets/icons/locations-to-meat.svg
     - assets/icons/sms.svg
     - assets/icons/tel.svg
+    - assets/icons/dashboard.svg
+    - assets/icons/dashboard_selected.svg
+    - assets/icons/bondy.svg
+    - assets/icons/bondy_selected.svg
+    - assets/icons/activities.svg
+    - assets/icons/activities_selected.svg
+    - assets/icons/pediatricians.svg
+    - assets/icons/pediatricians_selected.svg
+    - assets/icons/profile.svg
+    - assets/icons/profile_selected.svg
 
     - assets/images/doctor.jpg
     - assets/images/doctor2.jpg

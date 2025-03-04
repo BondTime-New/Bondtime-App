@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/pediatrician_list_screen.dart';
-import 'providers/favorites_provider.dart'; // Make sure the path is correct
+import 'screens/main_screen.dart'; // ✅ Update this import
+import 'providers/favorites_provider.dart';
 
 void main() {
   runApp(
@@ -20,7 +20,7 @@ class BondTimeApp extends StatelessWidget {
     return MaterialApp(
       title: 'BondTime',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: PediatricianListScreen(),
+      home: MainScreen(), // ✅ Use MainScreen instead
     );
   }
 }

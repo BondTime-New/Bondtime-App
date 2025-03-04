@@ -6,7 +6,6 @@ import '../data/pediatricians.dart';
 import '../widgets/pediatrician_card.dart';
 import '../widgets/custom_search_bar.dart';
 import '../widgets/custom_app_bar.dart';
-import '../widgets/custom_bottom_navigation_bar.dart';
 
 var logger = Logger();
 
@@ -190,7 +189,6 @@ class PediatricianListScreenState extends State<PediatricianListScreen>
         ),
 
         // Bottom Navigation Bar (Fixed at the Bottom)
-        bottomNavigationBar: CustomBottomNavigationBar(currentIndex: 3),
       ),
     );
   }
