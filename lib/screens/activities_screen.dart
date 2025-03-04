@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/activity_card_no_indicator.dart';
-import '../widgets/activity_filter_dropdown.dart'; // ✅ Import dropdown filter
+import '../widgets/activity_filter_dropdown.dart';
 
 class ActivitiesScreen extends StatefulWidget {
   @override
@@ -10,48 +10,42 @@ class ActivitiesScreen extends StatefulWidget {
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
-  String selectedFilter = "All"; // ✅ Default filter selected
+  int selectedTab = 1; // Default: Today
+  String selectedFilter = "All"; // Default filter
 
   final List<Map<String, String>> activities = [
     {
       "day": "Day 4",
       "description": "Read a bedtime story to your child before sleep.",
       "icon": "assets/icons/activity1.svg",
-      "category": "Gross Motor", // ✅ Assigning categories for filtering
     },
     {
       "day": "Day 4",
       "description": "Spend 10 minutes engaging with your child playing with building blocks.",
       "icon": "assets/icons/activity1.svg",
-      "category": "Fine Motor",
     },
     {
       "day": "Day 4",
       "description": "Encourage your child to draw something they love.",
       "icon": "assets/icons/activity1.svg",
-      "category": "Communication",
     },
     {
       "day": "Day 4",
       "description": "Take a short walk outside with your child for fresh air.",
       "icon": "assets/icons/activity1.svg",
-      "category": "Sensory",
     },
   ];
 
-  // ✅ Function to update filter selection
-  void updateFilter(String filter) {
+  void _onTabTap(int index) {
     setState(() {
-      selectedFilter = filter;
+      selectedTab = index;
     });
   }
 
-  // ✅ Filter activities based on selected category
-  List<Map<String, String>> getFilteredActivities() {
-    if (selectedFilter == "All") {
-      return activities;
-    }
-    return activities.where((activity) => activity["category"] == selectedFilter).toList();
+  void _onFilterSelected(String filter) {
+    setState(() {
+      selectedFilter = filter;
+    });
   }
 
   @override
@@ -92,46 +86,65 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       bottomNavigationBar: BottomNavBar(selectedIndex: 2), // ✅ Highlights "Activities"
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Today",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'InterTight',
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8),
+
+                // **Tab Bar & Dropdown (Fixed Spacing)**
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        _tabItem("Completed", 0),
+                        SizedBox(width: 8), // ✅ Reduced space
+                        _tabItem("Today", 1),
+                        SizedBox(width: 8), // ✅ Reduced space
+                        _tabItem("Upcoming", 2),
+                      ],
                     ),
+                    ActivityFilterDropdown(onFilterSelected: _onFilterSelected),
+                  ],
+                ),
+
+                SizedBox(height: 12), // ✅ Reduced spacing
+
+                // **Activity Cards (Only for Today)**
+                if (selectedTab == 1)
+                  Column(
+                    children: activities.map((activity) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: ActivityCardNoIndicator(
+                          day: activity["day"]!,
+                          description: activity["description"]!,
+                          icon: activity["icon"]!,
+                        ),
+                      );
+                    }).toList(),
                   ),
-                  
-                  // **Activity Filter Dropdown**
-                  ActivityFilterDropdown(onFilterSelected: updateFilter), // ✅ Dropdown filter
-                ],
-              ),
-              SizedBox(height: 16),
 
-              // **Activity Cards (Filtered)**
-              Column(
-                children: getFilteredActivities().map((activity) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: ActivityCardNoIndicator(
-                      day: activity["day"]!,
-                      description: activity["description"]!,
-                      icon: activity["icon"]!,
-                    ),
-                  );
-                }).toList(),
-              ),
-
-              SizedBox(height: 24),
-            ],
+                SizedBox(height: 24), // ✅ Bottom spacing
+              ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _tabItem(String title, int index) {
+    return GestureDetector(
+      onTap: () => _onTabTap(index),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: index == selectedTab ? FontWeight.bold : FontWeight.normal,
+          color: index == selectedTab ? Colors.black : Color(0xFFC1C1C1),
         ),
       ),
     );
