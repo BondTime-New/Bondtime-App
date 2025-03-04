@@ -1,18 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../screens/dashboard.dart';
+import '../screens/activities_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
+  final int selectedIndex; // ✅ Accept selected index as a parameter
+
+  BottomNavBar({this.selectedIndex = 0}); // ✅ Default selected index is 0 (Dashboard)
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.selectedIndex; // ✅ Set selected index from constructor
+  }
 
   void _onItemTapped(int index) {
+    if (_selectedIndex == index) return; // ✅ Prevent unnecessary reloads
+
     setState(() {
       _selectedIndex = index;
     });
+
+    // ✅ Navigate to respective screens
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardScreen()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ActivitiesScreen()),
+        );
+        break;
+      default:
+        break; // ✅ You can add more cases when other screens are available
+    }
   }
 
   @override
