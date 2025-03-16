@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets/disease_notification_card.dart';
+import 'screens/activity_screen.dart';
+import 'widgets/disease_notification_card.dart'; // ✅ Import the widget
 
 void main() {
   runApp(const DiseaseRecognitionApp());
@@ -16,7 +17,11 @@ class DiseaseRecognitionApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/activity': (context) => const ActivityScreen(),
+      },
     );
   }
 }
@@ -24,9 +29,8 @@ class DiseaseRecognitionApp extends StatelessWidget {
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void _handleSeePediatrician() {
-    // Handle navigation or action when button is pressed
-    print("Navigating to Pediatrician Screen...");
+  void _handleSeePediatrician(BuildContext context) {
+    Navigator.pushNamed(context, '/activity'); // ✅ Navigate to Activity Screen
   }
 
   @override
@@ -35,7 +39,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Disease Recognition")),
       body: Center(
         child: DiseaseNotificationCard(
-          onTap: _handleSeePediatrician,
+          onTap: () => _handleSeePediatrician(context), // ✅ Pass onTap function
         ),
       ),
     );
