@@ -14,96 +14,101 @@ class ActivityScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            /// **Image**
-            SvgPicture.asset(
-              'assets/icons/warning.svg',
-              height: 180,
-              width: 180,
-            ),
-            const SizedBox(height: 16),
-
-            /// **Title**
-            const Text(
-              "We are a bit concerned !",
-              style: TextStyle(
-                fontFamily: "InterTight",
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.red,
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // ✅ Align to center
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              /// **Image**
+              SvgPicture.asset(
+                'assets/icons/warning.svg',
+                height: 200, // ✅ Adjust size as needed
+                width: 200,
               ),
-            ),
-            const SizedBox(height: 10),
+              const SizedBox(height: 24), // ✅ Added space after image
 
-            /// **Description**
-            const Text(
-              "Based on feedback from Days 3, 4, 5, and 6, we've noticed potential signs of developmental delays in your child's motor skills. "
-              "To ensure the best care, we strongly recommend consulting a pediatrician at the earliest. "
-              "Early support can make a big difference!",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: "InterTight",
-                fontSize: 14,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            /// **See Pediatricians Button**
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Add action for Pediatrician redirection
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                ),
-                child: const Text(
-                  "See Pediatricians",
-                  style: TextStyle(
-                    fontFamily: "InterTight",
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
+              /// **Title**
+              const Text(
+                "We are a bit concerned !",
+                style: TextStyle(
+                  fontFamily: "InterTight",
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
+              const SizedBox(height: 16), // ✅ Increased space after title
 
-            /// **Ask Bondy Button**
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // TODO: Add action for AI assistant Bondy
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+              /// **Description**
+              const Text(
+                "Based on feedback from Days 3, 4, 5, and 6, we've noticed potential signs of developmental delays in your child's motor skills. "
+                "To ensure the best care, we strongly recommend consulting a pediatrician at the earliest. "
+                "Early support can make a big difference!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "InterTight",
+                  fontSize: 14,
+                  color: Colors.black87,
                 ),
-                child: const Text(
-                  "Ask Bondy",
-                  style: TextStyle(
-                    fontFamily: "InterTight",
-                    color: Colors.white,
-                    fontSize: 16,
+              ),
+              const SizedBox(height: 24), // ✅ Added more space before buttons
+
+              /// **See Pediatricians Button**
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Add action for Pediatrician redirection
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 14), // ✅ Button padding
+                  ),
+                  child: const Text(
+                    "See Pediatricians",
+                    style: TextStyle(
+                      fontFamily: "InterTight",
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 16), // ✅ Added space between buttons
+
+              /// **Ask Bondy Button**
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // TODO: Add action for AI assistant Bondy
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 14), // ✅ Button padding
+                  ),
+                  child: const Text(
+                    "Ask Bondy",
+                    style: TextStyle(
+                      fontFamily: "InterTight",
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
