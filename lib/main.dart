@@ -1,21 +1,43 @@
 import 'package:flutter/material.dart';
-import 'screens/onboarding_screen.dart';
+import 'widgets/disease_notification_card.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const DiseaseRecognitionApp());
 }
 
-class MyApp extends StatelessWidget {
+class DiseaseRecognitionApp extends StatelessWidget {
+  const DiseaseRecognitionApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Disease Recognition',
       theme: ThemeData(
-        fontFamily: 'InterTight', // Set the custom font family here
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OnboardingScreen(), // Your OnboardingScreen
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  void _handleSeePediatrician() {
+    // Handle navigation or action when button is pressed
+    print("Navigating to Pediatrician Screen...");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Disease Recognition")),
+      body: Center(
+        child: DiseaseNotificationCard(
+          onTap: _handleSeePediatrician,
+        ),
+      ),
     );
   }
 }
