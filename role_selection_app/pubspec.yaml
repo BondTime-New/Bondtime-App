@@ -1,0 +1,38 @@
+name: role_selection_app
+description: "A new Flutter project."
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.0.7  # Added dependency for SVG support
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Adding assets for images (SVGs)
+  assets:
+    - assets/images/mother.svg
+    - assets/images/father.svg
+    - assets/images/grand.svg
+    - assets/images/caregiver.svg
+
+  # Adding fonts (Inter Tight)
+  fonts:
+    - family: InterTight
+      fonts:
+        - asset: assets/fonts/InterTight-VariableFont_wght.ttf
+        - asset: assets/fonts/InterTight-Italic-VariableFont_wght.ttf
+          style: italic
