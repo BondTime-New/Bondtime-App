@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import '../widgets/activity_card.dart';
 
-class ActivityScreen extends StatelessWidget {
+class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});
+
+  @override
+  State<ActivityScreen> createState() => _ActivityScreenState();
+}
+
+class _ActivityScreenState extends State<ActivityScreen> {
+  int selectedTabIndex = 1; // 0 = Completed, 1 = Today
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,47 @@ class ActivityScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // 👇 Tab Bar (Completed / Today)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () => setState(() => selectedTabIndex = 0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 24.0),
+                    child: Text(
+                      "Completed",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: selectedTabIndex == 0
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        color:
+                            selectedTabIndex == 0 ? Colors.black : Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => setState(() => selectedTabIndex = 1),
+                  child: Text(
+                    "Today",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: selectedTabIndex == 1
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      color: selectedTabIndex == 1 ? Colors.black : Colors.grey,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 16),
+
+            // 👇 Keep your original card layout (always show these for now)
             ActivityCard(
               day: 'Day 4',
               description:
