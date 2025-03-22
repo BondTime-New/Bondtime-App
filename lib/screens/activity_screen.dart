@@ -32,7 +32,9 @@ class ActivityScreen extends StatelessWidget {
               description:
                   'Spend 10 minutes engaging with your child playing with building blocks',
               icon: 'assets/icons/activity1.svg',
+              currentPage: 0,
               index: 0,
+              totalPages: 4,
             ),
             const SizedBox(height: 16),
             ActivityCard(
@@ -40,7 +42,9 @@ class ActivityScreen extends StatelessWidget {
               description:
                   'Spend 10 minutes engaging with your child playing with building blocks',
               icon: 'assets/icons/activity1.svg',
+              currentPage: 1,
               index: 0,
+              totalPages: 4,
             ),
             const SizedBox(height: 16),
             ActivityCard(
@@ -48,14 +52,18 @@ class ActivityScreen extends StatelessWidget {
               description:
                   'Spend 10 minutes engaging with your child playing with building blocks',
               icon: 'assets/icons/activity1.svg',
+              currentPage: 2,
               index: 0,
+              totalPages: 4,
             ),
             const SizedBox(height: 16),
             ActivityCard(
               day: 'Daily tips for mama',
               description: 'Drink 12 cups of water (3 litres)',
               icon: 'assets/icons/activity1.svg',
+              currentPage: 3,
               index: 1,
+              totalPages: 4,
             ),
           ],
         ),
