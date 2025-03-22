@@ -10,6 +10,16 @@ class ActivityScreen extends StatefulWidget {
 
 class _ActivityScreenState extends State<ActivityScreen> {
   int selectedTabIndex = 1; // 0 = Completed, 1 = Today
+  String selectedCategory = 'All Activities';
+
+  // Categories for sorting
+  final List<String> categories = [
+    'All Activities',
+    'Gross Motor Skills',
+    'Fine Motor Skills',
+    'Communication Skills',
+    'Sensory Skills',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +33,28 @@ class _ActivityScreenState extends State<ActivityScreen> {
         centerTitle: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        actions: const [
-          Icon(Icons.notifications_none, color: Colors.black),
-          SizedBox(width: 12),
-          Icon(Icons.settings_outlined, color: Colors.black),
-          SizedBox(width: 16),
+        actions: [
+          // Sorting Dropdown Button
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: DropdownButton<String>(
+              value: selectedCategory,
+              icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+              dropdownColor: Colors.white,
+              style: const TextStyle(color: Colors.black),
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedCategory = newValue!;
+                });
+              },
+              items: categories.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -35,7 +62,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 👇 Tab Bar (Completed / Today)
+            // Tab Buttons (Completed / Today)
             Row(
               children: [
                 GestureDetector(
@@ -73,48 +100,66 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
             const SizedBox(height: 16),
 
-            // 👇 Keep your original card layout (always show these for now)
-            ActivityCard(
-              day: 'Day 4',
-              description:
-                  'Spend 10 minutes engaging with your child playing with building blocks',
-              icon: 'assets/icons/activity1.svg',
-              currentPage: 0,
-              index: 0,
-              totalPages: 4,
-            ),
-            const SizedBox(height: 16),
-            ActivityCard(
-              day: 'Day 4',
-              description:
-                  'Spend 10 minutes engaging with your child playing with building blocks',
-              icon: 'assets/icons/activity1.svg',
-              currentPage: 1,
-              index: 0,
-              totalPages: 4,
-            ),
-            const SizedBox(height: 16),
-            ActivityCard(
-              day: 'Day 4',
-              description:
-                  'Spend 10 minutes engaging with your child playing with building blocks',
-              icon: 'assets/icons/activity1.svg',
-              currentPage: 2,
-              index: 0,
-              totalPages: 4,
-            ),
-            const SizedBox(height: 16),
-            ActivityCard(
-              day: 'Daily tips for mama',
-              description: 'Drink 12 cups of water (3 litres)',
-              icon: 'assets/icons/activity1.svg',
-              currentPage: 3,
-              index: 1,
-              totalPages: 4,
-            ),
+            // Display activities based on the selected tab and category
+            ..._buildCardsForSelectedTab(),
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> _buildCardsForSelectedTab() {
+    // Filter activities based on selected category
+    List<Map<String, String>> activities = [
+      {
+        'day': 'Day 4',
+        'description':
+            'Spend 10 minutes engaging with your child playing with building blocks',
+        'icon': 'assets/icons/activity1.svg',
+        'category': 'Gross Motor Skills',
+      },
+      {
+        'day': 'Daily tips for mama',
+        'description': 'Drink 12 cups of water (3 litres)',
+        'icon': 'assets/icons/activity1.svg',
+        'category': 'Fine Motor Skills',
+      },
+      {
+        'day': 'Day 4',
+        'description':
+            'Spend 10 minutes engaging with your child playing with building blocks',
+        'icon': 'assets/icons/activity1.svg',
+        'category': 'Communication Skills',
+      },
+      {
+        'day': 'Daily tips for mama',
+        'description': 'Drink 12 cups of water (3 litres)',
+        'icon': 'assets/icons/activity1.svg',
+        'category': 'Sensory Skills',
+      },
+    ];
+
+    // Filter activities based on the selected category
+    activities = activities.where((activity) {
+      return selectedCategory == 'All Activities' ||
+          activity['category'] == selectedCategory;
+    }).toList();
+
+    // Return ActivityCard widgets
+    return activities.map((activity) {
+      return Column(
+        children: [
+          ActivityCard(
+            day: activity['day']!,
+            description: activity['description']!,
+            icon: activity['icon']!,
+            currentPage: 0,
+            index: 0,
+            totalPages: 4,
+          ),
+          const SizedBox(height: 16),
+        ],
+      );
+    }).toList();
   }
 }
