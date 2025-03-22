@@ -1,18 +1,19 @@
-name: disease_recognition
-description: "A new Flutter project."
+name: activities
+description: A new Flutter project for activity cards UI
 
-publish_to: 'none'
+publish_to: 'none' # This prevents accidental publishing
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.1
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.8
-  flutter_svg: ^2.0.17  # Added for SVG support
+  flutter_svg: ^2.0.7
+
+  # Add other packages here if needed
 
 dev_dependencies:
   flutter_test:
@@ -23,9 +24,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/warning.svg
-
-  fonts:
-    - family: InterTight
-      fonts:
-        - asset: assets/fonts/InterTight-Regular.ttf # Load all font files in the folder
+    - assets/
