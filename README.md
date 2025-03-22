@@ -1,4 +1,4 @@
-# disease_recognition
+# activities
 
 A new Flutter project.
 

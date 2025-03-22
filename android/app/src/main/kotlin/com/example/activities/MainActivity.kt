@@ -1,4 +1,4 @@
-package com.example.disease_recognition
+package com.example.activities
 
 import io.flutter.embedding.android.FlutterActivity
 

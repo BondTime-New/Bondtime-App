@@ -1,6 +1,6 @@
 {
-    "name": "disease_recognition",
-    "short_name": "disease_recognition",
+    "name": "activities",
+    "short_name": "activities",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
