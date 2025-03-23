@@ -42,6 +42,7 @@ class ThankYouScreen extends StatelessWidget {
                 size: 40,
               ),
               const SizedBox(height: 15),
+              // Description text
               Text(
                 "Your insights help us tailor activities that better suit your child’s needs. We’re grateful for your support in their growth journey!",
                 style: AppStyles.bodyText, // Fixed reference
