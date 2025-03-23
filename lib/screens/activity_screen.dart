@@ -12,6 +12,9 @@ class _ActivityScreenState extends State<ActivityScreen> {
   int selectedTabIndex = 0;
   String selectedFilter = 'All';
 
+  // GlobalKey to position the dropdown menu under the button
+  final GlobalKey _filterKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,13 +36,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
       ),
       body: Column(
         children: [
-          // Tab Row + Filter
+          // Tabs + Filter Row
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Tabs
+                // Tab buttons
                 Row(
                   children: [
                     GestureDetector(
@@ -78,47 +81,78 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   ],
                 ),
 
-                // Filter dropdown
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFEEEEEE),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: DropdownButton<String>(
-                    value: selectedFilter,
-                    icon: const Icon(Icons.keyboard_arrow_down,
-                        color: Colors.black),
-                    elevation: 16,
-                    style: const TextStyle(color: Colors.black, fontSize: 14),
-                    underline: SizedBox(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedFilter = newValue!;
-                      });
-                    },
-                    items: <String>[
-                      'All',
-                      'Gross Motor Skills',
-                      'Fine Motor Skills',
-                      'Communication Skills',
-                      'Sensory Skills',
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
+                // Custom Filter Dropdown Button
+                IntrinsicWidth(
+                  child: GestureDetector(
+                    key: _filterKey,
+                    onTap: () async {
+                      final RenderBox button = _filterKey.currentContext!
+                          .findRenderObject() as RenderBox;
+                      final RenderBox overlay = Overlay.of(context)
+                          .context
+                          .findRenderObject() as RenderBox;
+                      final position =
+                          button.localToGlobal(Offset.zero, ancestor: overlay);
+
+                      final result = await showMenu<String>(
+                        context: context,
+                        position: RelativeRect.fromLTRB(
+                          position.dx,
+                          position.dy + button.size.height,
+                          position.dx + button.size.width,
+                          position.dy,
+                        ),
+                        items: <String>[
+                          'All',
+                          'Gross Motor Skills',
+                          'Fine Motor Skills',
+                          'Communication Skills',
+                          'Sensory Skills',
+                        ].map((String value) {
+                          return PopupMenuItem<String>(
+                            value: value,
+                            child: Text(value,
+                                style: const TextStyle(fontSize: 13)),
+                          );
+                        }).toList(),
                       );
-                    }).toList(),
+
+                      if (result != null) {
+                        setState(() {
+                          selectedFilter = result;
+                        });
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEAEAEA),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            selectedFilter,
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.black),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(Icons.keyboard_arrow_down,
+                              size: 18, color: Colors.black),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
 
-          const SizedBox(height: 12), // spacing after tabs
+          const SizedBox(height: 12),
 
-          // Content
+          // Tab Content
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
