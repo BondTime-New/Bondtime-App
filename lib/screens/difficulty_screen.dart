@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'thank_you_screen.dart';
+import 'thank_you_screen.dart'; //ensure import correct screen
 import '../widgets/feedback_card.dart';
 
 class DifficultyScreen extends StatelessWidget {
