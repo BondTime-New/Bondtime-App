@@ -8,7 +8,7 @@ class ThankYouScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, // Sets the background color of the screen
       body: Center(
         child: Container(
           width: 368,
