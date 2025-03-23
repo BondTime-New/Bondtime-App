@@ -4,7 +4,7 @@ class FeedbackCard extends StatefulWidget {
   final String question;
   final VoidCallback onNext;
   final bool isLast;
-
+  // Constructor with required parameters
   const FeedbackCard({
     required this.question,
     required this.onNext,
