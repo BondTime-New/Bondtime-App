@@ -86,6 +86,19 @@ class _OtpScreenState extends State<OtpScreen> {
                       MainAxisAlignment.spaceBetween, // Space between boxes
 
                   // Box style
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(13),
+                    fieldHeight: 76,
+                    fieldWidth: 62,
+                    activeFillColor: Colors.white,
+                    inactiveFillColor: Colors.white,
+                    selectedFillColor: Colors.white,
+                    inactiveColor:
+                        Color(0xFFD1D1D1), // Grey border when inactive
+                    selectedColor: Colors.black, // Border when selected
+                    activeColor: Colors.black, // Border when active
+                  ),
 
                   animationDuration: const Duration(milliseconds: 300),
                   enableActiveFill: true, // Fill boxes with color
