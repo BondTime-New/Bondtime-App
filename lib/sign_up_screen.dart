@@ -238,8 +238,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: ElevatedButton(
                   onPressed: _isFormValid
-                      ? _onSubmit
-                      : null, // Disabled if form not ready
+                      ? () {
+                          Navigator.pushNamed(context, '/role-selection');
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _isFormValid
                         ? const Color(0xFF111111)

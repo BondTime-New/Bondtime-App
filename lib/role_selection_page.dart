@@ -90,7 +90,13 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                       BorderRadius.circular(15), // Button corner radius updated
                 ),
               ),
-              onPressed: selectedRole != null ? () {} : null,
+              onPressed: selectedRole != null
+                  ? () {
+                      // Save role if needed, then go to the next screen
+                      Navigator.pushNamed(
+                          context, '/home'); // or any route you define
+                    }
+                  : null,
               child: Text(
                 "Next",
                 style: TextStyle(
