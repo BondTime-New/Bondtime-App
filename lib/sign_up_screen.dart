@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// This screen is for signing up a new user
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -9,6 +10,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  // Controllers to get text from the input fields
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -16,10 +18,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  // Form validation and UI control variables
   bool _isFormValid = false;
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
+  // Error messages
   String? _emailError;
   String? _passwordError;
   bool _isEmailValid = true;
@@ -27,11 +31,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
+
+    // Adding listeners to validate the form when user types
     _firstNameController.addListener(_validateForm);
     _lastNameController.addListener(_validateForm);
     _emailController.addListener(() {
-      _validateEmail();
-      _validateForm();
+      _validateEmail(); // Validate email when typing
+      _validateForm(); // Check overall form
     });
     _passwordController.addListener(_validateForm);
     _confirmPasswordController.addListener(_validateForm);
@@ -39,6 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
+    // Clean up controllers when screen is closed
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
@@ -47,8 +54,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  // This checks if all fields are filled correctly
   void _validateForm() {
-    _validatePassword();
+    _validatePassword(); // Check if passwords match
 
     setState(() {
       _isFormValid = _firstNameController.text.isNotEmpty &&
@@ -61,6 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  // This validates the email format
   void _validateEmail() {
     final email = _emailController.text;
     final emailRegex =
@@ -72,6 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  // Checks if both password fields match
   void _validatePassword() {
     if (_passwordController.text.isNotEmpty &&
         _confirmPasswordController.text.isNotEmpty &&
@@ -82,13 +92,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  // Called when user taps the "Next" button
   void _onSubmit() {
-    _validateForm();
+    _validateForm(); // Double check before proceeding
 
     if (_isFormValid) {
       print("Form is valid!");
 
-      // Add Navigation to Baby Registration Screen
+      // Navigate to the next screen (e.g., Baby Registration)
       Navigator.pushNamed(context, '/baby-registration');
     }
   }
@@ -97,6 +108,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      // App bar with back button
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -105,16 +118,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
+
+      // Page layout
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
             children: [
+              // Scrollable content area
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Header title
                       const Text(
                         "Tell us about you",
                         style: TextStyle(
@@ -125,6 +142,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
+
+                      // Subtitle
                       const Text(
                         "Every detail helps us support your baby’s journey.",
                         style: TextStyle(
@@ -134,13 +153,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: Color(0xFF8D8D8D),
                         ),
                       ),
+
                       const SizedBox(height: 20),
+
+                      // First name input
                       _buildLabeledTextField("Enter Your Name", "First Name",
                           _firstNameController),
+
                       const SizedBox(height: 14),
+
+                      // Last name input
                       _buildLabeledTextField(
                           "", "Last Name", _lastNameController),
+
                       const SizedBox(height: 14),
+
+                      // Email input with error check
                       _buildLabeledTextField(
                         "Enter Your Email",
                         "example@email.com",
@@ -148,7 +176,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         errorText: _isEmailValid ? null : _emailError,
                         svgIconPath: "assets/images/email.svg",
                       ),
+
                       const SizedBox(height: 14),
+
+                      // Password field with visibility toggle
                       _buildLabeledTextField(
                         "Create a Strong Password",
                         "Enter a password",
@@ -162,7 +193,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         svgIconPath: "assets/images/pw.svg",
                       ),
+
                       const SizedBox(height: 14),
+
+                      // Confirm password field
                       _buildLabeledTextField(
                         "",
                         "Re-enter the password",
@@ -182,6 +216,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
               ),
+
+              // Footer note about data privacy
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
@@ -195,18 +231,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
               ),
+
+              // "Next" button
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: ElevatedButton(
-                  onPressed: _isFormValid ? _onSubmit : null,
+                  onPressed: _isFormValid
+                      ? _onSubmit
+                      : null, // Disabled if form not ready
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _isFormValid
                         ? const Color(0xFF111111)
                         : Colors.grey.shade400,
                     minimumSize: const Size(double.infinity, 58),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                   child: const Text(
                     "Next",
@@ -226,6 +267,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  // Reusable text field with optional label, password toggle, icon, and error message
   Widget _buildLabeledTextField(
     String label,
     String hint,
@@ -250,16 +292,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
         if (label.isNotEmpty) const SizedBox(height: 5),
+
+        // Actual input field
         TextField(
           controller: controller,
-          obscureText: isPassword && !isPasswordVisible,
+          obscureText: isPassword && !isPasswordVisible, // Hide password
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
             hintText: hint,
-            hintStyle: const TextStyle(
-                color: Color(0xFFBDBDBD)), // Placeholder text color changed
+            hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
             errorText: errorText,
             prefixIcon: svgIconPath != null
                 ? Padding(
