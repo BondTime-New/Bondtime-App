@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// This is the Sign In screen where users can log in with email and password
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -9,26 +10,37 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  // Controllers to handle email and password input
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  // Toggles password visibility
   bool _isPasswordVisible = false;
+
+  // Tracks if form input is valid
   bool _isFormValid = false;
+
+  // Holds email validation error
   String? _emailError;
 
   @override
   void initState() {
     super.initState();
+
+    // Add listeners to input fields to validate form in real-time
     _emailController.addListener(_validateForm);
     _passwordController.addListener(_validateForm);
   }
 
   @override
   void dispose() {
+    // Clean up controllers
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
+  // Validates both email and password inputs
   void _validateForm() {
     setState(() {
       _emailError = _validateEmail(_emailController.text);
@@ -38,10 +50,11 @@ class _SignInScreenState extends State<SignInScreen> {
     });
   }
 
+  // Simple email validation using RegEx
   String? _validateEmail(String email) {
     final emailRegex =
         RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-    if (email.isEmpty) return null;
+    if (email.isEmpty) return null; // Don't show error if field is empty
     if (!emailRegex.hasMatch(email)) return "Enter a valid email";
     return null;
   }
@@ -51,29 +64,31 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      /// **AppBar for Back Button (Now Fully Left-Aligned)**
+      // Top AppBar with a back button
       appBar: AppBar(
         leading: Padding(
-          padding: const EdgeInsets.only(left: 10), // Adjust left padding
+          padding: const EdgeInsets.only(left: 10),
           child: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context); // Go back
             },
-            splashRadius: 20, // Matches onboarding screen behavior
+            splashRadius: 20,
           ),
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
 
+      // Body with scrollable content
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 20), // Match onboarding padding
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
+
+            // Title
             const Text(
               "Login to your account",
               style: TextStyle(
@@ -81,10 +96,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             const SizedBox(height: 30),
+
+            // Email Text Field with validation
             _buildTextField("Enter your mail", _emailController, false,
                 "assets/images/email.svg",
                 errorText: _emailError),
+
+            // Show error below if email is invalid
             if (_emailError != null)
               Padding(
                 padding: const EdgeInsets.only(left: 10, top: 5),
@@ -96,12 +116,18 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
               ),
+
             const SizedBox(height: 20),
+
+            // Password Text Field
             _buildTextField("Enter your password", _passwordController, true,
                 "assets/images/pw.svg"),
+
             const SizedBox(height: 20),
+
+            // Sign In Button (disabled if form is invalid)
             ElevatedButton(
-              onPressed: _isFormValid ? () {} : null,
+              onPressed: _isFormValid ? () {} : null, // Add sign-in logic here
               style: ElevatedButton.styleFrom(
                 backgroundColor:
                     _isFormValid ? Colors.black : const Color(0xFFA0A0A0),
@@ -115,12 +141,15 @@ class _SignInScreenState extends State<SignInScreen> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
+
             const SizedBox(height: 10),
+
+            // Forgot password button
             Center(
               child: TextButton(
                 onPressed: () {
                   Navigator.pushNamed(
-                      context, '/otp-verification'); // ✅ Navigate to OTP screen
+                      context, '/otp-verification'); // Go to OTP screen
                 },
                 style: ButtonStyle(
                   foregroundColor:
@@ -136,13 +165,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 child: const Text(
                   "Forgot Password?",
-                  style: TextStyle(
-                    color: Color(0xFF676767),
-                  ),
+                  style: TextStyle(color: Color(0xFF676767)),
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
+
+            // Divider line with "or"
             Row(
               children: const [
                 Expanded(child: Divider(thickness: 1)),
@@ -153,7 +183,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 Expanded(child: Divider(thickness: 1)),
               ],
             ),
+
             const SizedBox(height: 20),
+
+            // Social Login Buttons
             _buildSocialButton(
                 "Continue with Apple", "assets/images/apple.svg"),
             const SizedBox(height: 15),
@@ -169,6 +202,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  // Text field builder used for both email and password
   Widget _buildTextField(
     String hint,
     TextEditingController controller,
@@ -178,8 +212,8 @@ class _SignInScreenState extends State<SignInScreen> {
   }) {
     return TextField(
       controller: controller,
-      obscureText: isPassword ? !_isPasswordVisible : false,
-      onChanged: (_) => _validateForm(),
+      obscureText: isPassword ? !_isPasswordVisible : false, // Hide password
+      onChanged: (_) => _validateForm(), // Re-check form validity
       textAlign: TextAlign.left,
       decoration: InputDecoration(
         filled: true,
@@ -191,10 +225,14 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+
+        // Icon shown at start of text field
         prefixIcon: Padding(
           padding: const EdgeInsets.all(10),
           child: SvgPicture.asset(iconPath, width: 24, height: 24),
         ),
+
+        // Show/hide password toggle
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(
@@ -207,6 +245,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 },
               )
             : null,
+
+        // Text field borders
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),
           borderSide: const BorderSide(
@@ -225,6 +265,7 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  // Social login button builder
   Widget _buildSocialButton(String text, String iconPath) {
     return Container(
       width: double.infinity,
