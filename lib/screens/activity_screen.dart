@@ -12,8 +12,15 @@ class _ActivityScreenState extends State<ActivityScreen> {
   int selectedTabIndex = 0;
   String selectedFilter = 'All';
 
-  // GlobalKey to position the dropdown menu under the button
   final GlobalKey _filterKey = GlobalKey();
+
+  final List<Map<String, dynamic>> filterOptions = [
+    {'label': 'All', 'color': Colors.black},
+    {'label': 'Gross Motor Skills', 'color': Colors.blue},
+    {'label': 'Fine Motor Skills', 'color': Colors.green},
+    {'label': 'Communication Skills', 'color': Colors.amber},
+    {'label': 'Sensory Skills', 'color': Colors.pink},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +49,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Tab buttons
+                // Tabs
                 Row(
                   children: [
                     GestureDetector(
@@ -81,7 +88,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                   ],
                 ),
 
-                // Custom Filter Dropdown Button
+                // Filter Dropdown Button
                 IntrinsicWidth(
                   child: GestureDetector(
                     key: _filterKey,
@@ -91,8 +98,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       final RenderBox overlay = Overlay.of(context)
                           .context
                           .findRenderObject() as RenderBox;
-                      final position =
-                          button.localToGlobal(Offset.zero, ancestor: overlay);
+                      final position = button.localToGlobal(
+                        Offset.zero,
+                        ancestor: overlay,
+                      );
 
                       final result = await showMenu<String>(
                         context: context,
@@ -102,17 +111,26 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           position.dx + button.size.width,
                           position.dy,
                         ),
-                        items: <String>[
-                          'All',
-                          'Gross Motor Skills',
-                          'Fine Motor Skills',
-                          'Communication Skills',
-                          'Sensory Skills',
-                        ].map((String value) {
+                        items: filterOptions.map((item) {
                           return PopupMenuItem<String>(
-                            value: value,
-                            child: Text(value,
-                                style: const TextStyle(fontSize: 13)),
+                            value: item['label'] as String,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  item['label'] as String,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                                Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: item['color'] as Color,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }).toList(),
                       );

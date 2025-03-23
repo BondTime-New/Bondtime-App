@@ -18,12 +18,11 @@ class ActivityCard extends StatelessWidget {
     required this.totalPages,
   });
 
-  // Colors for each card
   final List<Map<String, Color>> cardColors = [
-    {"fill": Color(0xFFDCE6FF), "stroke": Color(0xFF5283FF)}, // Blue
-    {"fill": Color(0xFFE9FFEB), "stroke": Color(0xFF60D46B)}, // Green
-    {"fill": Color(0xFFFFF2CF), "stroke": Color(0xFFF6CE61)}, // Yellow
-    {"fill": Color(0xFFFFEAEA), "stroke": Color(0xFFEB9595)}, // Red
+    {"fill": Color(0xFFDCE6FF), "stroke": Color(0xFF5283FF)},
+    {"fill": Color(0xFFE9FFEB), "stroke": Color(0xFF60D46B)},
+    {"fill": Color(0xFFFFF2CF), "stroke": Color(0xFFF6CE61)},
+    {"fill": Color(0xFFFFEAEA), "stroke": Color(0xFFEB9595)},
   ];
 
   @override
@@ -36,14 +35,13 @@ class ActivityCard extends StatelessWidget {
       height: 175,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: fillColor, // Dynamic Fill Color
+        color: fillColor,
         borderRadius: BorderRadius.circular(15),
-        border:
-            Border.all(color: strokeColor, width: 1), // Dynamic Stroke Color
+        border: Border.all(color: strokeColor, width: 1),
       ),
       child: Stack(
         children: [
-          // Day Title
+          // Title
           Positioned(
             top: 0,
             left: 0,
@@ -53,7 +51,7 @@ class ActivityCard extends StatelessWidget {
             ),
           ),
 
-          // Description with max width
+          // Description
           Positioned(
             top: 30,
             left: 0,
@@ -67,7 +65,7 @@ class ActivityCard extends StatelessWidget {
             ),
           ),
 
-          // Play Button (Bottom Left)
+          // Play Button
           Positioned(
             bottom: 0,
             left: 0,
@@ -78,7 +76,7 @@ class ActivityCard extends StatelessWidget {
             ),
           ),
 
-          // Activity Image (Bottom Right)
+          // Activity Image
           Positioned(
             bottom: 0,
             right: 0,
@@ -86,27 +84,6 @@ class ActivityCard extends StatelessWidget {
               icon,
               width: 98,
               height: 131,
-            ),
-          ),
-
-          // Page Indicators
-          Positioned(
-            bottom: 10,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(totalPages, (i) {
-                return Container(
-                  width: 8,
-                  height: 8,
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: currentPage == i ? Colors.black : Colors.grey[400],
-                  ),
-                );
-              }),
             ),
           ),
         ],
