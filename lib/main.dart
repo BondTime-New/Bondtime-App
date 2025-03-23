@@ -12,8 +12,11 @@ class BondTimeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'BondTime',
-      debugShowCheckedModeBanner: false,
-      home: ActivityScreen(),
+      theme: ThemeData(
+        fontFamily: 'InterTight',
+        useMaterial3: true,
+      ),
+      home: const ActivityScreen(),
     );
   }
 }
