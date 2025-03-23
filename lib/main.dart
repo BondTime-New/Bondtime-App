@@ -15,9 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'BondTime',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: 'Roboto', // You can change this if you use custom fonts
+        fontFamily: 'Roboto', // change fonts from here
       ),
-      home: const SplashScreen(), // Start with SplashScreen
+      home: const SplashScreen(), // start with SplashScreen
     );
   }
 }
