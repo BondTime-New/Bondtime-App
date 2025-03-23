@@ -49,8 +49,9 @@ class _FeedbackCardState extends State<FeedbackCard> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ), //Text
+            ),
             const SizedBox(height: 20),
+            // Rating selection row (1-5)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(5, (index) {
