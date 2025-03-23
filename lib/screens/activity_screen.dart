@@ -9,7 +9,8 @@ class ActivityScreen extends StatefulWidget {
 }
 
 class _ActivityScreenState extends State<ActivityScreen> {
-  int selectedTabIndex = 0; // 0 = Completed, 1 = Today
+  int selectedTabIndex = 0;
+  String selectedFilter = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -23,112 +24,22 @@ class _ActivityScreenState extends State<ActivityScreen> {
         centerTitle: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        actions: [
-          // Sorting Button
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.filter_list, color: Colors.black),
-            onSelected: (value) {
-              // Handle selection
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem(
-                  value: 'All Activities',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('All Activities'),
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 'Gross Motor Skills',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Gross Motor Skills'),
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 'Fine Motor Skills',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Fine Motor Skills'),
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 'Communication Skills',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Communication Skills'),
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.yellow,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 'Sensory Skills',
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text('Sensory Skills'),
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ];
-            },
-          ),
+        actions: const [
+          Icon(Icons.notifications_none, color: Colors.black),
+          SizedBox(width: 12),
+          Icon(Icons.settings_outlined, color: Colors.black),
+          SizedBox(width: 16),
         ],
       ),
       body: Column(
         children: [
-          // Custom Tab Bar
+          // Tab Row + Filter
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Tabs
                 Row(
                   children: [
                     GestureDetector(
@@ -166,23 +77,53 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Divider(
-                  height: 1,
-                  thickness: 0.5,
-                  color: Color(0xFFEEEEEE),
+
+                // Filter dropdown
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEEEEEE),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: DropdownButton<String>(
+                    value: selectedFilter,
+                    icon: const Icon(Icons.keyboard_arrow_down,
+                        color: Colors.black),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.black, fontSize: 14),
+                    underline: SizedBox(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedFilter = newValue!;
+                      });
+                    },
+                    items: <String>[
+                      'All',
+                      'Gross Motor Skills',
+                      'Fine Motor Skills',
+                      'Communication Skills',
+                      'Sensory Skills',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ],
             ),
           ),
 
-          // Tab Content
+          const SizedBox(height: 12), // spacing after tabs
+
+          // Content
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: selectedTabIndex == 0
                   ? Column(
-                      // Completed Tab
                       children: [
                         ActivityCard(
                           day: 'Completed Activity 1',
@@ -206,7 +147,6 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       ],
                     )
                   : Column(
-                      // Today Tab
                       children: [
                         ActivityCard(
                           day: 'Day 4',
