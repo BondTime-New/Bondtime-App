@@ -35,6 +35,7 @@ class ThankYouScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 15),
+              // Heart icon
               const Icon(
                 Icons.favorite,
                 color: Colors.red,
