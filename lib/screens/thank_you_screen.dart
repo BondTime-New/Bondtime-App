@@ -49,6 +49,7 @@ class ThankYouScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
+              // "Next Activity" button
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/next_activity');
