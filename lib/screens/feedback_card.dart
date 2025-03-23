@@ -73,7 +73,7 @@ class _FeedbackCardState extends State<FeedbackCard> {
                       border: Border.all(color: Colors.black),
                     ),
                     child: Text(
-                      "${index + 1}",
+                      "${index + 1}", // Display rating number
                       style: TextStyle(
                         color: selectedRating == index + 1
                             ? Colors.white
