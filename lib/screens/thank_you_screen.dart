@@ -15,7 +15,7 @@ class ThankYouScreen extends StatelessWidget {
           height: 484,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(18.65),
+            borderRadius: BorderRadius.circular(18.65), // Adds rounded corners
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
