@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; //import material.dart
 
 class FeedbackCard extends StatefulWidget {
   final String question;
@@ -49,7 +49,7 @@ class _FeedbackCardState extends State<FeedbackCard> {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
-            ),
+            ), //Text
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
