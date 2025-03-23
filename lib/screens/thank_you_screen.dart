@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../styles/app_styles.dart'; // Ensure this file exists
 
 class ThankYouScreen extends StatelessWidget {
-  const ThankYouScreen({super.key});
+  const ThankYouScreen(
+      {super.key}); // Constructor with a key for widget identity
 
   @override
   Widget build(BuildContext context) {
