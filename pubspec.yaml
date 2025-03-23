@@ -17,7 +17,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
+#img
   assets:
     - lib/assets/images/father_child.png
     - lib/assets/images/logo.png
