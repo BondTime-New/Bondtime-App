@@ -1,6 +1,3 @@
-// =====================
-// profile_screen.dart
-// =====================
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/stat_card.dart';
@@ -113,6 +110,7 @@ class ProfileScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
+          // Scrollable Stat Cards
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -126,6 +124,7 @@ class ProfileScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
+          // Skill Cards
           Wrap(
             spacing: 10,
             runSpacing: 10,
