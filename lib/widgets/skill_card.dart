@@ -16,9 +16,9 @@ class SkillCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 182,
-      height: 118,
+      height: 72,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(8, 13, 8, 8),
+        padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(12),
@@ -26,21 +26,33 @@ class SkillCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            LinearProgressIndicator(
-              value: value / 5,
-              backgroundColor: Colors.grey[300],
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
-              minHeight: 5,
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child:
-                  Text(value.toString(), style: const TextStyle(fontSize: 12)),
-            )
+            Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: LinearProgressIndicator(
+                      value: value / 5,
+                      backgroundColor: Colors.grey[300],
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.black),
+                      minHeight: 6,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  value.toString(),
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
           ],
         ),
       ),
