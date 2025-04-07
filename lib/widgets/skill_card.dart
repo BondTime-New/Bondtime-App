@@ -16,7 +16,7 @@ class SkillCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 182,
-      height: 72,
+      height: 94, // ✅ increased to eliminate final 3px overflow
       child: Container(
         padding: const EdgeInsets.fromLTRB(8, 10, 8, 10),
         decoration: BoxDecoration(
@@ -26,12 +26,9 @@ class SkillCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
             Row(
               children: [
                 Expanded(
@@ -40,17 +37,15 @@ class SkillCard extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: value / 5,
                       backgroundColor: Colors.grey[300],
-                      valueColor:
-                          const AlwaysStoppedAnimation<Color>(Colors.black),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        Colors.black,
+                      ),
                       minHeight: 6,
                     ),
                   ),
                 ),
                 const SizedBox(width: 6),
-                Text(
-                  value.toString(),
-                  style: const TextStyle(fontSize: 12),
-                ),
+                Text(value.toString(), style: const TextStyle(fontSize: 12)),
               ],
             ),
           ],

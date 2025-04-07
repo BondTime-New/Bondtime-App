@@ -1,3 +1,6 @@
+// =====================
+// profile_screen.dart
+// =====================
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/stat_card.dart';
@@ -110,13 +113,15 @@ class ProfileScreen extends StatelessWidget {
 
           const SizedBox(height: 20),
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              StatCard(label: "Weight", value: "8kg"),
-              SizedBox(width: 16),
-              StatCard(label: "Height", value: "69.2 cm"),
-            ],
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: const [
+                StatCard(label: "Weight", value: "8kg"),
+                SizedBox(width: 10),
+                StatCard(label: "Height", value: "69.2 cm"),
+              ],
+            ),
           ),
 
           const SizedBox(height: 20),
@@ -149,22 +154,6 @@ class ProfileScreen extends StatelessWidget {
           ),
 
           const SizedBox(height: 20),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 4,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart), label: 'dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'bondy'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.sports_esports), label: 'activities'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.medical_services), label: 'pediatricians'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'profile'),
         ],
       ),
     );
