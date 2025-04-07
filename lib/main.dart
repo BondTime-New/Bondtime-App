@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'screens/activity_screen.dart';
+import 'screens/profile_screen.dart';
 
 void main() {
-  runApp(const BondTimeApp());
+  runApp(BabyProfileApp());
 }
 
-class BondTimeApp extends StatelessWidget {
-  const BondTimeApp({super.key});
-
+class BabyProfileApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BondTime',
-      theme: ThemeData(
-        fontFamily: 'InterTight',
-        useMaterial3: true,
-      ),
-      home: const ActivityScreen(),
+      title: 'Baby Profile',
+      debugShowCheckedModeBanner: false,
+      home: ProfileScreen(),
     );
   }
 }
