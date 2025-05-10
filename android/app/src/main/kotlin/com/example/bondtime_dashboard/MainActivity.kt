@@ -1,4 +1,4 @@
-package com.example.bondtime_app
+package com.example.bondtime_dashboard
 
 import io.flutter.embedding.android.FlutterActivity
 
