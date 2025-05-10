@@ -1,6 +1,6 @@
 {
-    "name": "bondtime_app",
-    "short_name": "bondtime_app",
+    "name": "profile_new",
+    "short_name": "profile_new",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
